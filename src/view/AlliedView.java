@@ -1,0 +1,103 @@
+package view;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.swing.JPanel;
+
+import model.Board;
+import model.Square;
+
+public class AlliedView extends JPanel{
+	
+
+	Board b;
+
+	public AlliedView(Board b) {
+		this.b = b;
+
+
+		/*	this.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				int a = e.getX(), o = e.getY();
+				if(a >= 0){
+					if(a<=taille*50){
+						if(o >= 0){
+							if(o<=taille*50){
+
+								int i = a / 50;
+								int j = o / 50;
+								//p.getCase(i, j).setPion(Pion.BLANC);
+								p.jouerPion(i, j);
+							}
+						}	
+					}
+				}
+
+
+				repaint();
+			}
+		});*/
+
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Square[][] tab = this.b.getSquares();
+		Font aine = new Font("Arial", Font.BOLD, 25);
+		g.setFont(aine);
+		System.out.println(tab.length+"  "+tab[0].length);
+		for(int i = 0; i < tab.length; i++){
+			for(int j = 0; j < tab[0].length; j++){
+
+				if(tab[i][j].getBoat() == null){
+				g.setColor(Color.BLUE);
+				g.fillRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES,Window.TAILLE_CASES, Window.TAILLE_CASES);	
+				}else{
+					
+				g.setColor(Color.GRAY);
+				g.fillRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
+				}
+				
+				g.setColor(Color.BLACK);
+				g.drawRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
+/*
+				
+				switch(tab[i][j]){
+				case VIDE:
+					break;
+				case BLANC:
+					g.setColor(Color.WHITE);
+					g.fillOval(50*i + 5, 50*j + 5, 40, 40);
+					break;
+				case NOIR:
+					g.setColor(Color.BLACK);
+					g.fillOval(50*i + 5, 50*j + 5, 40, 40);
+					break;
+				}*/
+			}
+		}
+
+	
+
+	}
+
+	public void setBoard(Board b){
+		this.b = b;
+	}
+}
