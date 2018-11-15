@@ -42,7 +42,7 @@ public class Boat {
 		return idImage;
 	}
 
-	public void toucher(Square sq){
+	public boolean toucher(Square sq){
 		if(!coule){
 			if(ptsVie.containsKey(sq)){
 				Integer pv = ptsVie.get(sq);
@@ -62,6 +62,7 @@ public class Boat {
 						if(verif){
 							coule = verif;
 							System.out.println("Coulé "+sq.getPosX()+","+sq.getPosY());
+							return true;
 						}
 
 					}
@@ -69,6 +70,6 @@ public class Boat {
 
 			}
 		}
-
+		return false;
 	}
 }

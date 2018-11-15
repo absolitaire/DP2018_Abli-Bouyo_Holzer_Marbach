@@ -2,16 +2,15 @@ package view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
 import model.Board;
 import model.Square;
 
-public class AlliedView extends JPanel{
+public class AlliedView extends JPanel implements Observer{
 	
 
 	Board b;
@@ -54,30 +53,49 @@ public class AlliedView extends JPanel{
 		});*/
 
 	}
+	@Override
+	public void update(Observable o, Object arg) {
+		repaint();
 
+	}
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Square[][] tab = this.b.getSquares();
 		Font aine = new Font("Arial", Font.BOLD, 25);
 		g.setFont(aine);
-		System.out.println(tab.length+"  "+tab[0].length);
 		for(int i = 0; i < tab.length; i++){
 			for(int j = 0; j < tab[0].length; j++){
 
 				if(tab[i][j].getBoat() == null){
-				g.setColor(Color.BLUE);
-				g.fillRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES,Window.TAILLE_CASES, Window.TAILLE_CASES);	
+					if(tab[i][j].isShooted()){
+						g.setColor(Color.BLUE);
+					}else{
+						g.setColor(Color.CYAN);
+					}
+
 				}else{
-					
-				g.setColor(Color.GRAY);
-				g.fillRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
+					if(tab[i][j].isShooted()){
+						if(tab[i][j].getBoat().isCoule()){
+							g.setColor(Color.RED);
+						}else{
+							g.setColor(Color.ORANGE);
+						}
+						
+						
+							
+					}else{
+						g.setColor(Color.GRAY);
+					}
+
 				}
-				
+				g.fillRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
+
+
 				g.setColor(Color.BLACK);
 				g.drawRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
-/*
-				
+				/*
+
 				switch(tab[i][j]){
 				case VIDE:
 					break;
@@ -93,7 +111,6 @@ public class AlliedView extends JPanel{
 			}
 		}
 
-	
 
 	}
 

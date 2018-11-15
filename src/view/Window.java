@@ -12,11 +12,11 @@ public class Window extends JFrame {
 
 	public static int TAILLE_CASES = 30;
 	
-	public Window(){
+	public Window(Game g){
 		super("Bataille Navale");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE );
 		
-		Game g = new Game(0);
+		
 		
 		
 		OpponentView op = new OpponentView(g.getBoard(0));
@@ -28,6 +28,7 @@ public class Window extends JFrame {
 		AlliedView al = new AlliedView(g.getBoard(1));
 		al.setPreferredSize(new  Dimension (500,500));
 		this.add(al, BorderLayout.WEST);
+		g.addObserver(al);
 		
 		this.setPreferredSize(new  Dimension (1100,500));
 		this.pack ();

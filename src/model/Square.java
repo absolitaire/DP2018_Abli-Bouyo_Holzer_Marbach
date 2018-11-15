@@ -62,14 +62,14 @@ public class Square {
 		return true;
 	}
 
-	public void tirer(){
+	public boolean tirer(){
 		
 		shooted = true;
 		if(boat != null){
-			boat.toucher(this);
+			return(boat.toucher(this));
 		}
 		
-
+		return false;
 	}
 	
 }

@@ -10,11 +10,14 @@ public class Game extends Observable{
 	public Game(int choixEpoque){
 		joueurs = new Player[2];
 		boards = new Board[2];
-		joueurs[0] = new Player(0, new IARandom());
-		boards[0] = new Board(new Boat20thFactory(), joueurs[0]);
+		boards[1] = new Board(new Boat20thFactory());
 		joueurs[1] = new Player(1, new Human());
-		boards[1] = new Board(new Boat20thFactory(), joueurs[1]);
-		joueurEnCours = 0;
+		boards[1].setJoueur(joueurs[1]);
+		boards[0] = new Board(new Boat20thFactory());
+		//joueurs[0] = new Player(0, new IARandom(this, 1));
+		joueurs[0] = new Player(0, new IACross(this, 1));
+		boards[0].setJoueur(joueurs[0]);
+		joueurEnCours = 1;
 		
 		
 	}
@@ -37,9 +40,36 @@ public class Game extends Observable{
 	
 	public void tirer(int joueur, int a, int o){
 		System.out.println("Tir en "+a+","+o);
-		boards[0].getSquares()[a][o].tirer();
+		if(boards[joueur].getSquares()[a][o].tirer() == true) {
+			boolean verif = false;
+			//System.out.println(boards[joueur].getBateaux());
+			for(Boat boat : boards[joueur].getBateaux()) {
+				//System.out.println(boat+" "+boat.isCoule());
+				if(!boat.isCoule()) {
+					verif = true; 
+					break;
+				}
+			}
+			//System.out.println("final "+verif);
+			if(verif == false) {
+				System.out.println("Le joueur "+joueur+" a perdu");
+			}
+		}else {
+			
+		}
+		joueurEnCours = (joueurEnCours == 0 ? 1 : 0);
 		setChanged();
 		notifyObservers();
 	}
 	
+	public void boucle() {
+		while(true) {
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			joueurs[joueurEnCours].tirer();
+		}
+	}
 }
