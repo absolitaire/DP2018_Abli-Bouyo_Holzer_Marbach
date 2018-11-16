@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import controller.OpponentController;
 import model.Game;
+import model.ImageFactory;
 
 public class Window extends JFrame {
 
@@ -16,16 +17,16 @@ public class Window extends JFrame {
 		super("Bataille Navale");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE );
 		
+		ImageFactory imgfac = new ImageFactory();
 		
 		
-		
-		OpponentView op = new OpponentView(g.getBoard(0));
+		OpponentView op = new OpponentView(g.getBoard(0), imgfac);
 		op.setPreferredSize(new  Dimension (500,500));
 		this.add(op, BorderLayout.EAST);
 		op.addMouseListener(new OpponentController(g));
 		g.addObserver(op);
 		
-		AlliedView al = new AlliedView(g.getBoard(1));
+		AlliedView al = new AlliedView(g.getBoard(1),imgfac);
 		al.setPreferredSize(new  Dimension (500,500));
 		this.add(al, BorderLayout.WEST);
 		g.addObserver(al);

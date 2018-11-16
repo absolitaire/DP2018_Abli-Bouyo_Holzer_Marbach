@@ -8,17 +8,18 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import model.Board;
+import model.ImageFactory;
 import model.Square;
 
 public class OpponentView extends JPanel implements Observer{
 
-
+	private ImageFactory imgfac;
 
 	Board b;
 
-	public OpponentView(Board b) {
+	public OpponentView(Board b, ImageFactory imgfac) {
 		this.b = b;
-
+		this.imgfac = imgfac;
 
 		/*	this.addMouseListener(new MouseListener() {
 

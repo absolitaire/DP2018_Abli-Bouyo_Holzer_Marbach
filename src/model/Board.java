@@ -10,9 +10,12 @@ public class Board {
 	private Player joueur;
 	private List<Boat> bateaux;
 	private Square[][] squares;
+	//0-2 = horizontal    3-5 = vertical
+	private int[] images;
 
 	public Board(BoatFactory b){
 		//this.joueur = joueur;
+		this.images = b.obtenirImages();
 		bateaux = new ArrayList<Boat>();
 		squares = new Square[TAILLE][TAILLE];
 		for(int i = 0; i < TAILLE; i++){
@@ -76,17 +79,37 @@ public class Board {
 						taille = boat.getTaille();
 						x = xOrig;
 						y = yOrig;
-						while(taille > 0){
+						squares[x][y].setBoat(boat);
+						boat.setSquare(squares[x][y]);
+						if(direction) {
+							squares[x][y].setIdImage(images[0]);
+							x++;
+						}else {
+							squares[x][y].setIdImage(images[3]);
+							y++;
+						}
+						taille--;
+						while(taille > 1){
 							//System.out.println(x+"  "+y);
 							squares[x][y].setBoat(boat);
 							boat.setSquare(squares[x][y]);
 							if(direction) {
+								squares[x][y].setIdImage(images[1]);
 								x++;
 							}else {
+								squares[x][y].setIdImage(images[4]);
 								y++;
 							}
 							taille--;
-							
+						}
+						squares[x][y].setBoat(boat);
+						boat.setSquare(squares[x][y]);
+						if(direction) {
+							squares[x][y].setIdImage(images[2]);
+							x++;
+						}else {
+							squares[x][y].setIdImage(images[5]);
+							y++;
 						}
 					}
 

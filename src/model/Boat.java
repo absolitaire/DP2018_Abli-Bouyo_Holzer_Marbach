@@ -7,16 +7,13 @@ public class Boat {
 	private int taille, pvParCase;
 	private String nom;
 	private boolean coule;
-	private int idImage;
 
-	public Boat(String n, int idImage, int pvParCase, int t) {
+	public Boat(String n, int pvParCase, int t) {
 		nom = n;
-		this.idImage = idImage;
 		ptsVie = new HashMap<Square, Integer>();
 		coule = false;
 		taille = t;
 		this.pvParCase = pvParCase;
-
 	}
 
 	public HashMap<Square, Integer> getPtsVie() {
@@ -36,10 +33,6 @@ public class Boat {
 
 	public boolean isCoule() {
 		return coule;
-	}
-
-	public int getIdImage() {
-		return idImage;
 	}
 
 	public boolean toucher(Square sq){
