@@ -8,12 +8,14 @@ public class IACross implements Strategy {
 	private int idOpponent;
 	private Square focus;
 	private Stack<Square> nextTargets;
+	private boolean changementQuadrillage;
 
 	public IACross(Game g, int opponent) {
 		this.g = g;
 		this.b = g.getBoard(opponent);
 		this.idOpponent = opponent;
 		nextTargets = new Stack<Square>();
+		changementQuadrillage = false;
 	}
 	@Override
 	public void tirer() {
@@ -38,11 +40,11 @@ public class IACross implements Strategy {
 						if(!b.getSquares()[a][o-1].isShooted())
 							nextTargets.add(b.getSquares()[a][o-1]);
 					}
-					if(a<Board.TAILLE) {
+					if(a<Board.TAILLE-1) {
 						if(!b.getSquares()[a+1][o].isShooted())
 							nextTargets.add(b.getSquares()[a+1][o]);
 					}
-					if(o>Board.TAILLE) {
+					if(o<Board.TAILLE-1) {
 						if(!b.getSquares()[a][o+1].isShooted())
 							nextTargets.add(b.getSquares()[a][o+1]);
 					}
@@ -69,12 +71,23 @@ public class IACross implements Strategy {
 				}
 			}
 		}else {
+			int essais = 0;
 			while(true) {
+				essais ++;
 				a = 2*(int)(Board.TAILLE/2*Math.random());
 				o = 2*(int)(Board.TAILLE/2*Math.random());
 				if(Math.random()<0.5) {
-					a++;
-					o++;
+					if(changementQuadrillage) {
+						a++;
+					}else {
+						a++;
+						o++;
+					}
+
+				}else {
+					if(changementQuadrillage) {
+						o++;
+					}
 				}
 				//System.out.println(a+" "+o+b);
 				if(!b.getSquares()[a][o].isShooted()) {
@@ -91,11 +104,11 @@ public class IACross implements Strategy {
 								if(!b.getSquares()[a][o-1].isShooted())
 									nextTargets.add(b.getSquares()[a][o-1]);
 							}
-							if(a<Board.TAILLE) {
+							if(a<Board.TAILLE-1) {
 								if(!b.getSquares()[a+1][o].isShooted())
 									nextTargets.add(b.getSquares()[a+1][o]);
 							}
-							if(o>Board.TAILLE) {
+							if(o<Board.TAILLE-1) {
 								if(!b.getSquares()[a][o+1].isShooted())
 									nextTargets.add(b.getSquares()[a][o+1]);
 							}
@@ -103,6 +116,10 @@ public class IACross implements Strategy {
 						}
 					}
 					break;
+				}
+				
+				if(essais > (Board.TAILLE * Board.TAILLE / 2)) {
+					changementQuadrillage = !changementQuadrillage;
 				}
 			}
 		}

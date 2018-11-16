@@ -24,7 +24,7 @@ public class Board {
 			//System.out.println("lé bato");
 			ArrayList<Boat> list = b.creerBateaux();
 			//TODO changer ici
-			int taille, x, y, codageNickelTKT = 0;
+			/*int taille, x, y, codageNickelTKT = 0;
 			for(Boat boat : list){
 				bateaux.add(boat);
 				codageNickelTKT ++;
@@ -37,8 +37,8 @@ public class Board {
 					x++;
 					taille--;
 				}
-			}
-			/*int taille, x, y, xOrig, yOrig;
+			}*/
+			int taille, x, y, xOrig, yOrig;
 			boolean place, echec, direction;
 			for(Boat boat : list){
 				bateaux.add(boat);
@@ -62,17 +62,22 @@ public class Board {
 									y++;
 								}
 								taille--;
-								break;
+								
+							}else {
+								echec = true;//System.out.println("echc");
 							}
+						}else{
+							echec = true;//System.out.println("echc");
 						}
-						echec = true;System.out.println("echc");
+						
 					}
 					if(!echec) {
+						place = true;
 						taille = boat.getTaille();
 						x = xOrig;
 						y = yOrig;
 						while(taille > 0){
-							System.out.println(x+"  "+y);
+							//System.out.println(x+"  "+y);
 							squares[x][y].setBoat(boat);
 							boat.setSquare(squares[x][y]);
 							if(direction) {
@@ -81,13 +86,14 @@ public class Board {
 								y++;
 							}
 							taille--;
+							
 						}
 					}
 
 				}
 
 
-			}*/
+			}
 		}
 	}
 
