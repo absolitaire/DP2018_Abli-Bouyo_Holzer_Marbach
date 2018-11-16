@@ -30,6 +30,13 @@ public class Window extends JFrame {
 		this.add(al, BorderLayout.WEST);
 		g.addObserver(al);
 		
+		/*OpponentView op2 = new OpponentView(g.getBoard(1));
+		op2.setPreferredSize(new  Dimension (500,500));
+		this.add(op2, BorderLayout.WEST);
+		op2.addMouseListener(new OpponentController(g));
+		g.addObserver(op2);*/
+		
+		
 		this.setPreferredSize(new  Dimension (1100,500));
 		this.pack ();
 		this.setVisible(true);

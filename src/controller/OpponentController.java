@@ -36,7 +36,8 @@ public class OpponentController implements MouseListener{
 							int j = o / Window.TAILLE_CASES;
 
 							//System.out.println(i+"  "+j);
-							g.tirer(0, i, j);
+							//g.tirer(0, i, j);
+							g.tirer((g.getJoueurEnCours() == 0 ? 1 : 0), i, j);
 
 						}
 					}	

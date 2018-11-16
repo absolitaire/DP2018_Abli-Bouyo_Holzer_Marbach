@@ -16,6 +16,7 @@ public class Game extends Observable{
 		boards[0] = new Board(new Boat20thFactory());
 		//joueurs[0] = new Player(0, new IARandom(this, 1));
 		joueurs[0] = new Player(0, new IACross(this, 1));
+		//joueurs[0] = new Player(0, new Human());
 		boards[0].setJoueur(joueurs[0]);
 		joueurEnCours = 1;
 		

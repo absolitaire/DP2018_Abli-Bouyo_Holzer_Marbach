@@ -86,7 +86,8 @@ public class OpponentView extends JPanel implements Observer{
 						
 							
 					}else{
-						g.setColor(Color.GRAY);
+						//g.setColor(Color.GRAY);
+						g.setColor(Color.CYAN);
 					}
 
 				}
