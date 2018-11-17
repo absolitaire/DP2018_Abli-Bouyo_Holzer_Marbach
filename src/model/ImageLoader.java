@@ -9,7 +9,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class ImageFactory {
+public class ImageLoader {
 
     /**
      * Les images utilisées pour les cases
@@ -25,7 +25,7 @@ public class ImageFactory {
     /**
      * Permet de creer les images
      */
-    public ImageFactory() {
+    public ImageLoader() {
         try {
             //final String dir = System.getProperty("user.dir");
             //System.out.println("current dir = " + dir);
