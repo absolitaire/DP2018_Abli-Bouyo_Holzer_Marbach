@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class IACross implements Strategy {
@@ -48,9 +49,28 @@ public class IACross implements Strategy {
 						if(!b.getSquares()[a][o+1].isShooted())
 							nextTargets.add(b.getSquares()[a][o+1]);
 					}
+					
+					ArrayList<Square> prio = new ArrayList<Square>();
+					if(sq.getPosX()==focus.getPosX()) {
+						for(Square s : nextTargets) {
+							if(s.getPosX() == sq.getPosX()) {
+								prio.add(s);
+							}
+						}
+					}if(sq.getPosY()==focus.getPosY()) {
+						for(Square s : nextTargets) {
+							if(s.getPosY() == sq.getPosY()) {
+								prio.add(s);
+							}
+						}
+					}
+					for(Square s : prio) {
+						System.out.println("ayyy + "+s.getPosX() +" "+s.getPosY());
+						nextTargets.remove(s);
+						nextTargets.push(s);
+					}
 
-
-					/*ArrayList<Square> rm = new ArrayList<Square>();
+					/*
 					if(sq.getPosX()==focus.getPosX()) {
 						for(Square s : nextTargets) {
 							if(s.getPosX() != sq.getPosX()) {
@@ -117,7 +137,7 @@ public class IACross implements Strategy {
 					}
 					break;
 				}
-				
+
 				if(essais > (Board.TAILLE * Board.TAILLE / 2)) {
 					changementQuadrillage = !changementQuadrillage;
 				}
