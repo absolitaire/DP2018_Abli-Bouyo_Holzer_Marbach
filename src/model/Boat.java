@@ -42,7 +42,8 @@ public class Boat {
 				if(pv > 0){
 					pv--;
 					ptsVie.put(sq, pv);
-					System.out.println("Touché "+sq.getPosX()+","+sq.getPosY());
+					//System.out.println("Touché "+sq.getPosX()+","+sq.getPosY());
+					Log.getInstance().addLog("                > Touché "+sq.getPosX()+","+sq.getPosY());
 					if(pv == 0){
 						boolean verif = true;
 						for(Integer i :ptsVie.values()){
@@ -54,7 +55,8 @@ public class Boat {
 						}
 						if(verif){
 							coule = verif;
-							System.out.println("Coulé "+sq.getPosX()+","+sq.getPosY());
+							//System.out.println("Coulé "+sq.getPosX()+","+sq.getPosY());
+							Log.getInstance().addLog("                > Coulé "+sq.getPosX()+","+sq.getPosY());
 							return true;
 						}
 

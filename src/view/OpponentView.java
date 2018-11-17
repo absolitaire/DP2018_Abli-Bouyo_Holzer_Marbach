@@ -8,16 +8,18 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import model.Board;
-import model.ImageFactory;
+import model.ImageLoader;
 import model.Square;
 
 public class OpponentView extends JPanel implements Observer{
+	
+	private static final long serialVersionUID = 1L;
 
-	private ImageFactory imgfac;
+	private ImageLoader imgfac;
 
 	Board b;
 
-	public OpponentView(Board b, ImageFactory imgfac) {
+	public OpponentView(Board b, ImageLoader imgfac) {
 		this.b = b;
 		this.imgfac = imgfac;
 

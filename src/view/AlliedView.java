@@ -8,15 +8,17 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import model.Board;
-import model.ImageFactory;
+import model.ImageLoader;
 import model.Square;
 
 public class AlliedView extends JPanel implements Observer{
 	
-	private ImageFactory imgfac;
+	private static final long serialVersionUID = 1L;
+	
+	private ImageLoader imgfac;
 	Board b;
 
-	public AlliedView(Board b, ImageFactory imgfc) {
+	public AlliedView(Board b, ImageLoader imgfc) {
 		this.b = b;
 		this.imgfac = imgfc;
 

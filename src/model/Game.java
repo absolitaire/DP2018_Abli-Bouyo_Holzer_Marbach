@@ -40,20 +40,20 @@ public class Game extends Observable{
 	}
 	
 	public void tirer(int joueur, int a, int o){
-		System.out.println("Tir en "+a+","+o);
+		//System.out.println("Tir en "+a+","+o);
+		Log.getInstance().addLog("Joueur "+joueurEnCours+"> Tir en "+a+","+o);
 		if(boards[joueur].getSquares()[a][o].tirer() == true) {
 			boolean verif = false;
-			//System.out.println(boards[joueur].getBateaux());
+			
 			for(Boat boat : boards[joueur].getBateaux()) {
-				//System.out.println(boat+" "+boat.isCoule());
 				if(!boat.isCoule()) {
 					verif = true; 
 					break;
 				}
 			}
-			//System.out.println("final "+verif);
 			if(verif == false) {
-				System.out.println("Le joueur "+joueur+" a perdu");
+				//System.out.println("Le joueur "+joueur+" a perdu");
+				Log.getInstance().addLog("Le joueur "+joueur+" a perdu");
 			}
 		}else {
 			
