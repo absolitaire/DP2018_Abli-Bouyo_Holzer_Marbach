@@ -26,4 +26,9 @@ public class Log extends Observable{
 		notifyObservers();
 	}
 	
+	public void clear(){
+		logs = new StringBuffer();
+		setChanged();
+		notifyObservers();
+	}
 }

@@ -6,6 +6,7 @@ public class Game extends Observable{
 	private Player[] joueurs;
 	private Board[] boards;
 	private int joueurEnCours;
+	private boolean gameIsRunning;
 
 	public Game(int choixEpoque){
 		joueurs = new Player[2];
@@ -19,8 +20,8 @@ public class Game extends Observable{
 		//joueurs[0] = new Player(0, new Human());
 		boards[0].setJoueur(joueurs[0]);
 		joueurEnCours = 1;
-		
-		
+		gameIsRunning = true;
+
 	}
 
 	public Player getJoueur(int id) {
@@ -38,33 +39,46 @@ public class Game extends Observable{
 	public void setJoueurEnCours(int joueurEnCours) {
 		this.joueurEnCours = joueurEnCours;
 	}
-	
-	public void tirer(int joueur, int a, int o){
-		//System.out.println("Tir en "+a+","+o);
-		Log.getInstance().addLog("Joueur "+joueurEnCours+"> Tir en "+a+","+o);
-		if(boards[joueur].getSquares()[a][o].tirer() == true) {
-			boolean verif = false;
-			
-			for(Boat boat : boards[joueur].getBateaux()) {
-				if(!boat.isCoule()) {
-					verif = true; 
-					break;
-				}
-			}
-			if(verif == false) {
-				//System.out.println("Le joueur "+joueur+" a perdu");
-				Log.getInstance().addLog("Le joueur "+joueur+" a perdu");
-			}
-		}else {
-			
-		}
-		joueurEnCours = (joueurEnCours == 0 ? 1 : 0);
-		setChanged();
-		notifyObservers();
+
+	public boolean getGameIsRunning() {
+		return gameIsRunning;
 	}
-	
-	public void boucle() {
-		while(true) {
+
+	public void setGameIsRunning(boolean gameIsRunning) {
+		this.gameIsRunning = gameIsRunning;
+	}
+
+	public void tirer(int joueur, int a, int o){
+		if(gameIsRunning){
+			//System.out.println("Tir en "+a+","+o);
+			Log.getInstance().addLog("Joueur "+joueurEnCours+"> Tir en "+a+","+o);
+			if(boards[joueur].getSquares()[a][o].tirer() == true) {
+				boolean verif = false;
+
+				for(Boat boat : boards[joueur].getBateaux()) {
+					if(!boat.isCoule()) {
+						verif = true; 
+						break;
+					}
+				}
+				if(verif == false) {
+					//System.out.println("Le joueur "+joueur+" a perdu");
+					Log.getInstance().addLog("Le joueur "+joueur+" a perdu !");
+					gameIsRunning = false;
+				}
+			}else {
+
+			}
+			joueurEnCours = (joueurEnCours == 0 ? 1 : 0);
+			setChanged();
+			notifyObservers();
+			joueurs[joueurEnCours].tirer();
+		}
+
+	}
+
+	/*public void boucle() {
+		while(gameIsRunning) {
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -72,5 +86,5 @@ public class Game extends Observable{
 			}
 			joueurs[joueurEnCours].tirer();
 		}
-	}
+	}*/
 }

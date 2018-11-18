@@ -65,29 +65,12 @@ public class IACross implements Strategy {
 						}
 					}
 					for(Square s : prio) {
-						System.out.println("ayyy + "+s.getPosX() +" "+s.getPosY());
+						//System.out.println("ayyy + "+s.getPosX() +" "+s.getPosY());
 						nextTargets.remove(s);
 						nextTargets.push(s);
 					}
 
-					/*
-					if(sq.getPosX()==focus.getPosX()) {
-						for(Square s : nextTargets) {
-							if(s.getPosX() != sq.getPosX()) {
-								rm.add(s);
-							}
-						}
-					}else {
-						for(Square s : nextTargets) {
-							if(s.getPosY() != sq.getPosY()) {
-								rm.add(s);
-							}
-						}
-					}
 
-					for(Square s : rm) {
-						nextTargets.remove(s);
-					}*/
 				}
 			}
 		}else {
