@@ -2,6 +2,7 @@ package view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,10 +19,17 @@ public class AlliedView extends JPanel implements Observer{
 	private ImageLoader imgfac;
 	
 	private Board b;
+	
+	private boolean previsualisation;
+	private int prvX, prvY, prvSize;
+	private boolean prvHorizontal;
 
 	public AlliedView(Board b, ImageLoader imgfc) {
 		this.b = b;
 		this.imgfac = imgfc;
+		
+		previsualisation = false;
+		//prvImages = new ArrayList<Integer>();
 
 	}
 	@Override
@@ -29,6 +37,24 @@ public class AlliedView extends JPanel implements Observer{
 		repaint();
 
 	}
+	
+	public void enablePrv(boolean horizontal){
+		previsualisation = true;
+		prvHorizontal = horizontal;
+		//prvImages = img;
+	}
+	
+	public void disablePrv(){
+		previsualisation = false;
+		repaint();
+	}
+	public void previsualisation(int a, int o, int size){
+		prvX = a;
+		prvY = o;
+		prvSize = size;
+		repaint();
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -70,6 +96,20 @@ public class AlliedView extends JPanel implements Observer{
 				g.drawRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
 
 			}
+		}
+		
+		if(previsualisation){
+			for(int i = 0; i < prvSize; i++){
+				g.setColor(new Color(0,0,0,125));
+				if(prvHorizontal){
+					g.fillRect((prvX + i)*Window.TAILLE_CASES, prvY*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
+				}else{
+					g.fillRect(prvX*Window.TAILLE_CASES, (prvY + i)*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
+					
+				}
+				
+			}
+			
 		}
 	}
 

@@ -26,7 +26,7 @@ public class IACross implements Strategy {
 			Square sq = nextTargets.pop();
 			a = sq.getPosX();
 			o = sq.getPosY();
-			g.tirer(idOpponent, a, o );
+			g.shoot(idOpponent, a, o );
 			if(sq.getBoat()!= null) {
 				if(sq.getBoat().isCoule()) {
 					nextTargets.removeAllElements();
@@ -95,7 +95,7 @@ public class IACross implements Strategy {
 				//System.out.println(a+" "+o+b);
 				if(!b.getSquares()[a][o].isShooted()) {
 
-					g.tirer(idOpponent, a, o);
+					g.shoot(idOpponent, a, o);
 					if(b.getSquares()[a][o].getBoat()!= null) {
 						if(!b.getSquares()[a][o].getBoat().isCoule()) {
 							focus = b.getSquares()[a][o];

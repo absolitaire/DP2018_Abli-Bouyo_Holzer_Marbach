@@ -20,7 +20,7 @@ public class IARandom implements Strategy {
 			//System.out.println(a+" "+o+b);
 			if(!b.getSquares()[a][o].isShooted()) {
 				
-				g.tirer(idOpponent, a, o);
+				g.shoot(idOpponent, a, o);
 				break;
 			}
 		}
