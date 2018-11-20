@@ -16,7 +16,7 @@ public class AlliedController implements MouseListener, MouseMotionListener, Key
 	private AlliedView al;
 	private boolean previsualisation;
 	private boolean horizontal;
-	
+
 
 
 	public AlliedController(Game g, AlliedView al) {
@@ -41,10 +41,10 @@ public class AlliedController implements MouseListener, MouseMotionListener, Key
 		//System.out.println("entree");
 		if(!g.getBoatsAreAllPlaced()){
 			previsualisation = true;
-			
+
 			//int taille = g.getBoard(1).sizeOfTheNextBoatToPlace();
 			//ArrayList<Integer> list = new ArrayList<Integer>();
-		/*	if(horizontal) {
+			/*	if(horizontal) {
 				squares[x][y].setIdImage(images[0]);
 			}else {
 				squares[x][y].setIdImage(images[3]);
@@ -68,36 +68,47 @@ public class AlliedController implements MouseListener, MouseMotionListener, Key
 			}else {
 				squares[x][y].setIdImage(images[5]);
 			}
-			*/
+			 */
 			al.enablePrv(horizontal);
 		}
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(!g.getBoatsAreAllPlaced()) {
-			int a = e.getX(), o = e.getY();
-			if(a >= 0){
-				if(a <= Window.TAILLE_CASES*10){
-					if(o >= 0){
-						if(o <= Window.TAILLE_CASES*10){
+			if(e.getButton() == MouseEvent.BUTTON1) {
+				int a = e.getX(), o = e.getY();
+				if(a >= 0){
+					if(a <= Window.TAILLE_CASES*10){
+						if(o >= 0){
+							if(o <= Window.TAILLE_CASES*10){
 
-							int i = a / Window.TAILLE_CASES;
-							int j = o / Window.TAILLE_CASES;
+								int i = a / Window.TAILLE_CASES;
+								int j = o / Window.TAILLE_CASES;
 
-							//System.out.println(i+"  "+j);
-							//g.tirer(0, i, j);
-							g.placeBoat(i, j, horizontal);
+								//System.out.println(i+"  "+j);
+								//g.tirer(0, i, j);
+								g.placeBoat(i, j, horizontal);
 
-						}
-					}	
+							}
+						}	
+					}
+				}
+			}else {
+				if(e.getButton() == MouseEvent.BUTTON3) {
+					horizontal = !horizontal;
+					if(previsualisation){
+						al.enablePrv(horizontal);
+						al.repaint();
+					}
 				}
 			}
+
 		}
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
-		
+
+
 	}
 
 	@Override
@@ -114,13 +125,13 @@ public class AlliedController implements MouseListener, MouseMotionListener, Key
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
