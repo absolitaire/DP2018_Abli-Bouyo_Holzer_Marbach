@@ -74,6 +74,8 @@ public class AlliedView extends JPanel implements Observer{
 					}
 
 				}else{
+					g.setColor(Color.CYAN);
+					g.fillRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
 					g.drawImage(imgfac.getTableauPng()[tab[i][j].getIdImage()],	i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, null);
 					if(tab[i][j].isShooted()){
 						if(tab[i][j].getBoat().isCoule()){
