@@ -7,16 +7,13 @@ public class Boat {
 	private int taille, pvParCase;
 	private String nom;
 	private boolean coule;
-	private int idImage;
 
-	public Boat(String n, int idImage, int pvParCase, int t) {
+	public Boat(String n, int pvParCase, int t) {
 		nom = n;
-		this.idImage = idImage;
 		ptsVie = new HashMap<Square, Integer>();
 		coule = false;
 		taille = t;
 		this.pvParCase = pvParCase;
-
 	}
 
 	public HashMap<Square, Integer> getPtsVie() {
@@ -38,18 +35,15 @@ public class Boat {
 		return coule;
 	}
 
-	public int getIdImage() {
-		return idImage;
-	}
-
-	public void toucher(Square sq){
+	public boolean toucher(Square sq){
 		if(!coule){
 			if(ptsVie.containsKey(sq)){
 				Integer pv = ptsVie.get(sq);
 				if(pv > 0){
 					pv--;
 					ptsVie.put(sq, pv);
-					System.out.println("Touché "+sq.getPosX()+","+sq.getPosY());
+					//System.out.println("Touché "+sq.getPosX()+","+sq.getPosY());
+					Log.getInstance().addLog("                > Touché "+sq.getPosX()+","+sq.getPosY());
 					if(pv == 0){
 						boolean verif = true;
 						for(Integer i :ptsVie.values()){
@@ -61,7 +55,9 @@ public class Boat {
 						}
 						if(verif){
 							coule = verif;
-							System.out.println("Coulé "+sq.getPosX()+","+sq.getPosY());
+							//System.out.println("Coulé "+sq.getPosX()+","+sq.getPosY());
+							Log.getInstance().addLog("                > Coulé "+sq.getPosX()+","+sq.getPosY());
+							return true;
 						}
 
 					}
@@ -69,6 +65,6 @@ public class Boat {
 
 			}
 		}
-
+		return false;
 	}
 }

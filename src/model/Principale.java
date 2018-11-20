@@ -5,8 +5,9 @@ import view.*;
 public class Principale {
 
 	public static void main(String[] args) {
-		new Window();
-
+		Game g = new Game(0, true);
+		new Window(g);
+		//g.boucle();
 	}
 
 }

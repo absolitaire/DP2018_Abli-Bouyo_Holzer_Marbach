@@ -2,99 +2,115 @@ package view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
 import model.Board;
+import model.ImageLoader;
 import model.Square;
 
-public class AlliedView extends JPanel{
+public class AlliedView extends JPanel implements Observer{
 	
+	private static final long serialVersionUID = 1L;
+	
+	private ImageLoader imgfac;
+	
+	private Board b;
+	
+	private boolean previsualisation;
+	private int prvX, prvY, prvSize;
+	private boolean prvHorizontal;
 
-	Board b;
-
-	public AlliedView(Board b) {
+	public AlliedView(Board b, ImageLoader imgfc) {
 		this.b = b;
-
-
-		/*	this.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {}
-			@Override
-			public void mousePressed(MouseEvent e) {}
-			@Override
-			public void mouseExited(MouseEvent e) {}
-			@Override
-			public void mouseEntered(MouseEvent e) {}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				int a = e.getX(), o = e.getY();
-				if(a >= 0){
-					if(a<=taille*50){
-						if(o >= 0){
-							if(o<=taille*50){
-
-								int i = a / 50;
-								int j = o / 50;
-								//p.getCase(i, j).setPion(Pion.BLANC);
-								p.jouerPion(i, j);
-							}
-						}	
-					}
-				}
-
-
-				repaint();
-			}
-		});*/
+		this.imgfac = imgfc;
+		
+		previsualisation = false;
+		//prvImages = new ArrayList<Integer>();
 
 	}
+	@Override
+	public void update(Observable o, Object arg) {
+		repaint();
 
+	}
+	
+	public void enablePrv(boolean horizontal){
+		previsualisation = true;
+		prvHorizontal = horizontal;
+		//prvImages = img;
+	}
+	
+	public void disablePrv(){
+		previsualisation = false;
+		repaint();
+	}
+	public void previsualisation(int a, int o, int size){
+		prvX = a;
+		prvY = o;
+		prvSize = size;
+		repaint();
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Square[][] tab = this.b.getSquares();
 		Font aine = new Font("Arial", Font.BOLD, 25);
 		g.setFont(aine);
-		System.out.println(tab.length+"  "+tab[0].length);
+		Color col = null;
 		for(int i = 0; i < tab.length; i++){
 			for(int j = 0; j < tab[0].length; j++){
-
 				if(tab[i][j].getBoat() == null){
-				g.setColor(Color.BLUE);
-				g.fillRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES,Window.TAILLE_CASES, Window.TAILLE_CASES);	
+					if(tab[i][j].isShooted()){
+						//g.setColor(Color.BLUE);
+						col = Color.BLUE;
+					}else{
+						//g.setColor(Color.CYAN);
+						col = Color.CYAN;
+					}
+
 				}else{
-					
-				g.setColor(Color.GRAY);
-				g.fillRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
+					g.drawImage(imgfac.getTableauPng()[tab[i][j].getIdImage()],	i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, null);
+					if(tab[i][j].isShooted()){
+						if(tab[i][j].getBoat().isCoule()){
+							//g.setColor(Color.RED);
+							col = new Color(255,0,0,125);
+						}else{
+							//g.setColor(Color.ORANGE);
+							col = new Color(150,150,0,125);
+						}
+					}else{
+						//g.setColor(Color.GRAY);
+						col = new Color(0,0,0,0);
+					}
+
 				}
-				
+				g.setColor(col);
+				g.fillRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
+
 				g.setColor(Color.BLACK);
 				g.drawRect(i*Window.TAILLE_CASES, j*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
-/*
-				
-				switch(tab[i][j]){
-				case VIDE:
-					break;
-				case BLANC:
-					g.setColor(Color.WHITE);
-					g.fillOval(50*i + 5, 50*j + 5, 40, 40);
-					break;
-				case NOIR:
-					g.setColor(Color.BLACK);
-					g.fillOval(50*i + 5, 50*j + 5, 40, 40);
-					break;
-				}*/
+
 			}
 		}
-
-	
-
+		
+		if(previsualisation){
+			for(int i = 0; i < prvSize; i++){
+				g.setColor(new Color(0,0,0,125));
+				if(prvHorizontal){
+					g.fillRect((prvX + i)*Window.TAILLE_CASES, prvY*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
+				}else{
+					g.fillRect(prvX*Window.TAILLE_CASES, (prvY + i)*Window.TAILLE_CASES, Window.TAILLE_CASES, Window.TAILLE_CASES);
+					
+				}
+				
+			}
+			
+		}
 	}
 
 	public void setBoard(Board b){

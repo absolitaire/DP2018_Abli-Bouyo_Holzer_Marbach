@@ -5,6 +5,7 @@ public class Square {
 	private int posX, posY;
 	private boolean shooted;
 	private Boat boat;
+	private int idImage;
 	
 	public Square(int x, int y){
 		posX = x;
@@ -36,6 +37,14 @@ public class Square {
 	public int getPosY() {
 		return posY;
 	}
+	
+	public void setIdImage(int idImage) {
+		this.idImage = idImage;
+	}
+	
+	public int getIdImage() {
+		return idImage;
+	}
 
 	@Override
 	public int hashCode() {
@@ -62,14 +71,14 @@ public class Square {
 		return true;
 	}
 
-	public void tirer(){
+	public boolean tirer(){
 		
 		shooted = true;
 		if(boat != null){
-			boat.toucher(this);
+			return(boat.toucher(this));
 		}
 		
-
+		return false;
 	}
 	
 }
