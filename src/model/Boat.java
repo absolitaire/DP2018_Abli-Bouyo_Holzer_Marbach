@@ -7,13 +7,16 @@ public class Boat {
 	private int taille, pvParCase;
 	private String nom;
 	private boolean coule;
+	//0-2 = horizontal    3-5 = vertical
+	private int[] images;
 
-	public Boat(String n, int pvParCase, int t) {
+	public Boat(String n, int pvParCase, int t, int[] img) {
 		nom = n;
 		ptsVie = new HashMap<Square, Integer>();
 		coule = false;
 		taille = t;
 		this.pvParCase = pvParCase;
+		this.images = img;
 	}
 
 	public HashMap<Square, Integer> getPtsVie() {
@@ -42,8 +45,8 @@ public class Boat {
 				if(pv > 0){
 					pv--;
 					ptsVie.put(sq, pv);
-					//System.out.println("Touché "+sq.getPosX()+","+sq.getPosY());
-					Log.getInstance().addLog("                > Touché "+sq.getPosX()+","+sq.getPosY());
+					//System.out.println("Touchï¿½ "+sq.getPosX()+","+sq.getPosY());
+					Log.getInstance().addLog("                > Touchï¿½ "+sq.getPosX()+","+sq.getPosY());
 					if(pv == 0){
 						boolean verif = true;
 						for(Integer i :ptsVie.values()){
@@ -55,8 +58,8 @@ public class Boat {
 						}
 						if(verif){
 							coule = verif;
-							//System.out.println("Coulé "+sq.getPosX()+","+sq.getPosY());
-							Log.getInstance().addLog("                > Coulé "+sq.getPosX()+","+sq.getPosY());
+							//System.out.println("Coulï¿½ "+sq.getPosX()+","+sq.getPosY());
+							Log.getInstance().addLog("                > Coulï¿½ "+sq.getPosX()+","+sq.getPosY());
 							return true;
 						}
 
@@ -66,5 +69,9 @@ public class Boat {
 			}
 		}
 		return false;
+	}
+	
+	public int[] getImages(){
+		return images;
 	}
 }

@@ -19,7 +19,7 @@ public class Menu extends JMenuBar{
 	/*private Window w;
 	private Game g;*/
 
-	public Menu(Window w/*, Game g*/) {
+	public Menu(final Window w/*, Game g*/) {
 		/*this.w = w;
 		this.g)*/
 
@@ -46,7 +46,6 @@ public class Menu extends JMenuBar{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						//g.setGameIsRunning(false);
-
 						Log.getInstance().clear();
 						w.newGame(new Game(0, false));
 					}

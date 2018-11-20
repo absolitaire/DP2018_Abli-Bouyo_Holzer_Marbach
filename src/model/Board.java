@@ -13,12 +13,9 @@ public class Board {
 	private Square[][] squares;
 	private BoatFactory bf;
 
-	//0-2 = horizontal    3-5 = vertical
-	private int[] images;
-
 	public Board(BoatFactory b){
 		//this.joueur = joueur;
-		this.images = b.obtenirImages();
+		//this.images = b.obtenirImages();
 		boats = new ArrayList<Boat>();
 		squares = new Square[TAILLE][TAILLE];
 		for(int i = 0; i < TAILLE; i++){
@@ -146,10 +143,10 @@ public class Board {
 			squares[x][y].setBoat(boat);
 			boat.setSquare(squares[x][y]);
 			if(horizontal) {
-				squares[x][y].setIdImage(images[0]);
+				squares[x][y].setIdImage(boat.getImages()[0]);
 				x++;
 			}else {
-				squares[x][y].setIdImage(images[3]);
+				squares[x][y].setIdImage(boat.getImages()[3]);
 				y++;
 			}
 			taille--;
@@ -158,10 +155,10 @@ public class Board {
 				squares[x][y].setBoat(boat);
 				boat.setSquare(squares[x][y]);
 				if(horizontal) {
-					squares[x][y].setIdImage(images[1]);
+					squares[x][y].setIdImage(boat.getImages()[1]);
 					x++;
 				}else {
-					squares[x][y].setIdImage(images[4]);
+					squares[x][y].setIdImage(boat.getImages()[4]);
 					y++;
 				}
 				taille--;
@@ -169,10 +166,10 @@ public class Board {
 			squares[x][y].setBoat(boat);
 			boat.setSquare(squares[x][y]);
 			if(horizontal) {
-				squares[x][y].setIdImage(images[2]);
+				squares[x][y].setIdImage(boat.getImages()[2]);
 				x++;
 			}else {
-				squares[x][y].setIdImage(images[5]);
+				squares[x][y].setIdImage(boat.getImages()[5]);
 				y++;
 			}
 			boats.add(boat);
@@ -194,7 +191,7 @@ public class Board {
 	
 	public void logPlaceNextBoat(){
 		if(boatsToPlace.size()>0){
-			Log.getInstance().addLog("Bateau à placer: "+boatsToPlace.get(0).getNom()+ " ("+boatsToPlace.get(0).getTaille()+")");
+			Log.getInstance().addLog("Bateau ï¿½ placer: "+boatsToPlace.get(0).getNom()+ " ("+boatsToPlace.get(0).getTaille()+")");
 		}
 	}
 	
