@@ -1,17 +1,18 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board {
+public class Board implements Serializable {
 
 	public static final int TAILLE = 10;
 
-	private Player player;
+	private transient Player player;
 	private ArrayList<Boat> boats;
-	private ArrayList<Boat> boatsToPlace;
+	private transient ArrayList<Boat> boatsToPlace;
 	private Square[][] squares;
-	private BoatFactory bf;
+	private transient BoatFactory bf;
 
 	public Board(BoatFactory b){
 		//this.joueur = joueur;

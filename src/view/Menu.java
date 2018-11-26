@@ -10,6 +10,8 @@ import javax.swing.JSeparator;
 
 import model.Game;
 import model.Log;
+import model.MultiplayerClient;
+import model.MultiplayerServer;
 
 
 
@@ -17,12 +19,12 @@ public class Menu extends JMenuBar{
 
 	private static final long serialVersionUID = 1L;
 
-	/*private Window w;
-	private Game g;*/
+	/*private Window w;*/
+	private Game g;
 
-	public Menu(final Window w/*, Game g*/) {
-		/*this.w = w;
-		this.g)*/
+	public Menu(final Window w, Game g) {
+		/*this.w = w;)*/
+		this.g = g;
 
 		JMenu jm1= new JMenu("Nouvelle Partie");
 		this.add(jm1);
@@ -54,7 +56,34 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
-
+		jmi = new JMenuItem("Server");
+		jm1.add(jmi);
+		jmi.addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							new MultiplayerServer(g);
+						}catch(Exception exc) {
+							exc.printStackTrace();
+						}
+					}
+				}
+				);
+		jmi = new JMenuItem("Client");
+		jm1.add(jmi);
+		jmi.addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							new MultiplayerClient();
+						}catch(Exception exc) {
+							exc.printStackTrace();
+						}
+					}
+				}
+				);
 	}
 
 

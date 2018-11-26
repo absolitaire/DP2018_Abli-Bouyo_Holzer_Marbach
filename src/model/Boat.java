@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Boat {
+public class Boat  implements Serializable{
 	private HashMap<Square, Integer> ptsVie;
 	private int taille, pvParCase;
 	private String nom;
