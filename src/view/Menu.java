@@ -77,7 +77,7 @@ public class Menu extends JMenuBar{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						try {
-							new MultiplayerClient();
+							new MultiplayerClient(w);
 						}catch(Exception exc) {
 							exc.printStackTrace();
 						}
