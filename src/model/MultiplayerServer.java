@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 public class MultiplayerServer extends UnicastRemoteObject implements Observer, MultiplayerServerInterface{
 
 	private Game game;
+	private MultiplayerClientInterface cl;
 
 	public MultiplayerServer
 	(Game g) 
@@ -37,5 +38,11 @@ public class MultiplayerServer extends UnicastRemoteObject implements Observer, 
 		return game;
 	}
 	
+	public void msgToLog(String s) {
+		Log.getInstance().addLog(s);
+	}
 	
+	public void bindToServer(MultiplayerClientInterface cl) {
+		this.cl = cl;
+	}
 }

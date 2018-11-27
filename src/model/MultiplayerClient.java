@@ -7,8 +7,13 @@ import java.rmi.registry.Registry;
 
 import javax.naming.NamingException;
 
-public class MultiplayerClient {
-	public MultiplayerClient () throws  NamingException, RemoteException, NotBoundException{
+import view.Window;
+
+public class MultiplayerClient implements MultiplayerClientInterface {
+	private MultiplayerServerInterface srv;
+	private Window w;
+	
+	public MultiplayerClient (Window w) throws  NamingException, RemoteException, NotBoundException{
 		Registry registry = LocateRegistry.getRegistry();
 
 		System.out.println("Rmi regisrty bindings");
@@ -21,9 +26,24 @@ public class MultiplayerClient {
 		
 		String remoteObjectName = "multiplayer_server";
 		System.out.println(registry.lookup(remoteObjectName).getClass());
-		MultiplayerServerInterface srv = (MultiplayerServerInterface)
+		srv = (MultiplayerServerInterface)
 				registry.lookup(remoteObjectName);
 		
 		System.out.println(srv.getGame().getGameIsRunning());
+		srv.msgToLog("ayylmao");
+		w.newGame(srv.getGame());
+		
+		
+	}
+	
+	@Override
+	public void update() throws RemoteException {
+		
+		w.newGame(srv.getGame());
+		
+	}
+	
+	public void bindToServer() {
+		System.out.println("bondage");
 	}
 }
