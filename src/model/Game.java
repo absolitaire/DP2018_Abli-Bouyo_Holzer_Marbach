@@ -1,9 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Observable;
 
-public class Game extends Observable{
-	private Player[] joueurs;
+public class Game extends Observable implements Serializable{
+	private transient Player[] joueurs;
 	private Board[] boards;
 	private int joueurEnCours;
 	private boolean gameIsRunning;

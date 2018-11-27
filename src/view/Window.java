@@ -32,7 +32,7 @@ public class Window extends JFrame {
 		
 		ImageLoader imgfac = new ImageLoader();
 		
-		Menu m = new Menu(this/*, g*/);
+		Menu m = new Menu(this, g);
 		this.add(m, BorderLayout.NORTH);
 		
 		op = new OpponentView(g.getBoard(0), imgfac);
