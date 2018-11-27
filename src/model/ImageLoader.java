@@ -21,6 +21,18 @@ public class ImageLoader {
     protected String mh = "img/mh.png";
     protected String fh = "img/fh.png";
     protected String fh2 = "img/fh2.png";
+    protected String smv1 = "img/smv1.png";
+    protected String smv2 = "img/smv2.png";
+    protected String smv3 = "img/smv3.png";
+    protected String smh1 = "img/smh1.png";
+    protected String smh2 = "img/smh2.png";
+    protected String smh3 = "img/smh3.png";
+    protected String crh1 = "img/crh1.png";
+    protected String crh2 = "img/crh2.png";
+    protected String crh3 = "img/crh3.png";
+    protected String crv1 = "img/crv1.png";
+    protected String crv2 = "img/crv2.png";
+    protected String crv3 = "img/crv3.png";
     protected Image[] tableauPng;
 
     /**
@@ -30,7 +42,7 @@ public class ImageLoader {
         try {
             //final String dir = System.getProperty("user.dir");
             //System.out.println("current dir = " + dir);
-            this.tableauPng = new Image[7];
+            this.tableauPng = new Image[19];
             this.tableauPng[0] = ImageIO.read(new FileInputStream(dh));
             this.tableauPng[1] = ImageIO.read(new FileInputStream(mh));
             this.tableauPng[2] = ImageIO.read(new FileInputStream(fh));
@@ -38,6 +50,18 @@ public class ImageLoader {
             this.tableauPng[4] = ImageIO.read(new FileInputStream(mv));
             this.tableauPng[5] = ImageIO.read(new FileInputStream(fv));
             this.tableauPng[6] = ImageIO.read(new FileInputStream(fh2));
+            this.tableauPng[7] = ImageIO.read(new FileInputStream(smv1));
+            this.tableauPng[8] = ImageIO.read(new FileInputStream(smv2));
+            this.tableauPng[9] = ImageIO.read(new FileInputStream(smv3));
+            this.tableauPng[10] = ImageIO.read(new FileInputStream(smh1));
+            this.tableauPng[11] = ImageIO.read(new FileInputStream(smh2));
+            this.tableauPng[12] = ImageIO.read(new FileInputStream(smh3));
+            this.tableauPng[13] = ImageIO.read(new FileInputStream(crh1));
+            this.tableauPng[14] = ImageIO.read(new FileInputStream(crh2));
+            this.tableauPng[15] = ImageIO.read(new FileInputStream(crh3));
+            this.tableauPng[16] = ImageIO.read(new FileInputStream(crv1));
+            this.tableauPng[17] = ImageIO.read(new FileInputStream(crv2));
+            this.tableauPng[18] = ImageIO.read(new FileInputStream(crv3));
         } catch (IOException e) {
             System.out.println(e);
         }
