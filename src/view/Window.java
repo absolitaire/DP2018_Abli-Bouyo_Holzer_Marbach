@@ -22,6 +22,8 @@ public class Window extends JFrame {
 	private AlliedView al;
 	private OpponentController oc;
 	private AlliedController ac;
+	private Game game;
+	
 	
 	
 	public Window(Game g){
@@ -30,9 +32,11 @@ public class Window extends JFrame {
 		this.setResizable(false);
 		this.requestFocus();
 		
+		this.game = g;
+		
 		ImageLoader imgfac = new ImageLoader();
 		
-		Menu m = new Menu(this, g);
+		Menu m = new Menu(this);
 		this.add(m, BorderLayout.NORTH);
 		
 		op = new OpponentView(g.getBoard(0), imgfac);
@@ -78,6 +82,8 @@ public class Window extends JFrame {
 	}
 	
 	public void newGame(Game g){
+		this.game = g;
+		
 		op.setBoard(g.getBoard(0));
 		op.removeMouseListener(oc);
 		oc = new OpponentController(g);
@@ -96,7 +102,17 @@ public class Window extends JFrame {
 		this.addKeyListener(ac);
 		g.addObserver(al);
 		
-		
+		repaint();
 	}
+	
+	public void newGamePlayersSwapped(Game g) {
+		g.swapPlayers();
+		newGame(g);
+	}
+
+	public Game getGame() {
+		return game;
+	}
+	
 	
 }

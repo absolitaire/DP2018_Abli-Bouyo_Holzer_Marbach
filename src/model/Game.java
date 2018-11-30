@@ -4,24 +4,34 @@ import java.io.Serializable;
 import java.util.Observable;
 
 public class Game extends Observable implements Serializable{
-	private Player[] joueurs;
+
+	private Player[] players;
 	private Board[] boards;
 	private int joueurEnCours;
 	private boolean gameIsRunning;
 	private boolean boatsAreAllPlaced;
 
-	public Game(int choixEpoque, boolean automaticArrangement){
-		joueurs = new Player[2];
+	public Game(int choixEpoque, boolean automaticArrangement, boolean multiplayer){
+		players = new Player[2];
 		boards = new Board[2];
-		boards[1] = new Board(new Boat20thFactory());
-		joueurs[1] = new Player(1, new Human());
-		boards[1].setJoueur(joueurs[1]);
 
-		boards[0] = new Board(new Boat20thFactory());
-		//joueurs[0] = new Player(0, new IARandom(this, 1));
-		joueurs[0] = new Player(0, new IACross(this, 1));
-		//joueurs[0] = new Player(0, new Human());
-		boards[0].setJoueur(joueurs[0]);
+		boards[1] = new Board(new Boat20thFactory());
+		players[1] = new Player(1, new Human());
+		boards[1].setJoueur(players[1]);
+
+		if(multiplayer) {
+			boards[0] = new Board(new Boat20thFactory());
+			players[0] = new Player(0, new Human());
+			boards[0].setJoueur(players[0]);
+		}else {
+			boards[0] = new Board(new Boat20thFactory());
+			//joueurs[0] = new Player(0, new IARandom(this, 1));
+			players[0] = new Player(0, new IACross(this, 1));
+			//joueurs[0] = new Player(0, new Human());
+			boards[0].setJoueur(players[0]);
+		}
+
+
 
 		boards[0].automaticArrangement();
 		if(automaticArrangement){
@@ -39,7 +49,7 @@ public class Game extends Observable implements Serializable{
 	}
 
 	public Player getJoueur(int id) {
-		return joueurs[id];
+		return players[id];
 	}
 
 	public Board getBoard(int id) {
@@ -86,7 +96,7 @@ public class Game extends Observable implements Serializable{
 			joueurEnCours = (joueurEnCours == 0 ? 1 : 0);
 			setChanged();
 			notifyObservers();
-			joueurs[joueurEnCours].tirer();
+			players[joueurEnCours].tirer();
 		}
 
 	}
@@ -113,7 +123,19 @@ public class Game extends Observable implements Serializable{
 	public boolean getBoatsAreAllPlaced() {
 		return boatsAreAllPlaced;
 	}
-	
+
+	public void swapPlayers() {
+		Player p = players[0];
+		Board b = boards[0];
+		
+		players[0] = players[1];
+		boards[0] = boards[1];
+		
+		players[1] = p;
+		boards[1] = b;
+		
+		joueurEnCours = (joueurEnCours == 0 ? 1 : 0);
+	}
 
 
 	/*public void boucle() {
