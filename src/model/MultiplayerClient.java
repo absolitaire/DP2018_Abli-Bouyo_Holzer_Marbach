@@ -15,10 +15,13 @@ import view.Window;
 public class MultiplayerClient extends UnicastRemoteObject implements MultiplayerClientInterface, Observer{
 	private MultiplayerServerInterface srv;
 	private Window w;
-
+	private boolean ignoreNextLog;
+	
 	public MultiplayerClient (Window w) throws  NamingException, RemoteException, NotBoundException{
 		Registry registry = LocateRegistry.getRegistry();
 
+		ignoreNextLog = false;
+		
 		System.out.println("Rmi regisrty bindings");
 
 		String[] e = registry.list();
@@ -33,12 +36,13 @@ public class MultiplayerClient extends UnicastRemoteObject implements Multiplaye
 				registry.lookup(remoteObjectName);
 
 		System.out.println(srv.getGame().getGameIsRunning());
-		srv.msgToLog("ayylmao");
+		srv.logToServer("Un joueur s'est connecte!");
 		w.newGamePlayersSwapped(srv.getGame());
 
 		//UnicastRemoteObject.exportObject(this, 8080);
 		this.w = w;
 		w.getGame().addObserver(this);
+		Log.getInstance().addObserver(this);
 	}
 
 	@Override
@@ -68,17 +72,28 @@ public class MultiplayerClient extends UnicastRemoteObject implements Multiplaye
 		return srv;
 	}
 
-	public void shoot() {
-
+	public void logToClient(String s) {
+		ignoreNextLog = true;
+		Log.getInstance().addLog(s, false);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		if(srv!=null) {
 			try{
+				if(o instanceof Log) {
+					if(!Log.getInstance().getLastLogIsLocal()) {
+						//System.out.println("ignored cl");
+						//ignoreNextLog = false;
+					}else {
+						//System.out.println("ayy");
+						srv.logToServer(Log.getInstance().getLastLogAdded());
+					}
+				}else {
+					System.out.println("update server");
+					srv.updateServer();
+				}
 
-				System.out.println("pdate client");
-				srv.updateServer();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}

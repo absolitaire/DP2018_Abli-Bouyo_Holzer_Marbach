@@ -7,6 +7,7 @@ public interface MultiplayerClientInterface extends Remote{
 
 
 	public void updateClient() throws RemoteException;
+	public void logToClient(String s) throws RemoteException;
 	public Game getGame() throws RemoteException ;
 	public MultiplayerServerInterface getSrv()  throws RemoteException ;
 

@@ -63,6 +63,7 @@ public class Menu extends JMenuBar{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						try {
+							Log.getInstance().clear();
 							w.newGame(new Game(0, true, true));
 							new MultiplayerServer(w);
 						}catch(Exception exc) {
@@ -78,6 +79,7 @@ public class Menu extends JMenuBar{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						try {
+							Log.getInstance().clear();
 							MultiplayerClient mc = new MultiplayerClient(w);
 									//mc.bindToServer();
 							mc.getSrv().setClient(mc);

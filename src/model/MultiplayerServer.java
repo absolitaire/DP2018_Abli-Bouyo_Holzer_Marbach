@@ -17,12 +17,14 @@ public class MultiplayerServer extends UnicastRemoteObject implements Observer, 
 	//private Game game;
 	private MultiplayerClientInterface cl;
 	private Window w;
+	private boolean ignoreNextLog;
 
 	public MultiplayerServer
 	(/*Game g*/ Window w) 
 			throws RemoteException,NamingException, AlreadyBoundException {
 		//this.game = g;
 		this.w = w;	
+		ignoreNextLog = false;
 
 		System.out.println("binding server impl to registry");
 		Registry registry = LocateRegistry.getRegistry();
@@ -33,16 +35,28 @@ public class MultiplayerServer extends UnicastRemoteObject implements Observer, 
 		System.out.println("waiting for invocations");
 
 		w.getGame().addObserver(this);
+		Log.getInstance().addObserver(this);
 
 	}
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public void update(Observable o, Object arg) {
 
 		if(cl!=null) {
 			try{
+				if(o instanceof Log) {
+					if(!Log.getInstance().getLastLogIsLocal()) {
+						System.out.println("ignored srv");
+						ignoreNextLog = false;
+					}else {
+						cl.logToClient(Log.getInstance().getLastLogAdded());
+					}
 
-				System.out.println("pdate");
-				cl.updateClient();
+				}else {
+					System.out.println("pdate");
+					cl.updateClient();
+				}
+
+
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -52,8 +66,11 @@ public class MultiplayerServer extends UnicastRemoteObject implements Observer, 
 		return w.getGame();
 	}
 
-	public void msgToLog(String s) {
-		Log.getInstance().addLog(s);
+	public void logToServer(String s) {
+		ignoreNextLog = true;
+		Log.getInstance().addLog(s, false);
+
+		
 	}
 
 	public void setClient(MultiplayerClientInterface cl) {
@@ -67,6 +84,6 @@ public class MultiplayerServer extends UnicastRemoteObject implements Observer, 
 		w.getGame().deleteObservers();
 		w.newGamePlayersSwapped(cl.getGame());
 		w.getGame().addObserver(this);
-		
+
 	}
 }

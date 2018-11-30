@@ -15,18 +15,22 @@ public class Game extends Observable implements Serializable{
 		players = new Player[2];
 		boards = new Board[2];
 
-		boards[1] = new Board(new Boat20thFactory());
-		players[1] = new Player(1, new Human());
-		boards[1].setJoueur(players[1]);
+
 
 		if(multiplayer) {
+			boards[1] = new Board(new Boat20thFactory());
+			players[1] = new Player(1, "Host      ", new Human());
+			boards[1].setJoueur(players[1]);
 			boards[0] = new Board(new Boat20thFactory());
-			players[0] = new Player(0, new Human());
+			players[0] = new Player(0, "Client    ", new Human());
 			boards[0].setJoueur(players[0]);
 		}else {
+			boards[1] = new Board(new Boat20thFactory());
+			players[1] = new Player(1, "Joueur    ", new Human());
+			boards[1].setJoueur(players[1]);
 			boards[0] = new Board(new Boat20thFactory());
 			//joueurs[0] = new Player(0, new IARandom(this, 1));
-			players[0] = new Player(0, new IACross(this, 1));
+			players[0] = new Player(0, "IA             ", new IACross(this, 1));
 			//joueurs[0] = new Player(0, new Human());
 			boards[0].setJoueur(players[0]);
 		}
@@ -41,7 +45,7 @@ public class Game extends Observable implements Serializable{
 		}else{
 			gameIsRunning = false;
 			boatsAreAllPlaced = false;
-			Log.getInstance().addLog("Appuyez sur n'importe quelle touche pour alterner entre le \nplacement vertical et horizontal.");
+			Log.getInstance().addLog("Appuyez sur n'importe quelle touche pour alterner entre le \nplacement vertical et horizontal.", true);
 			boards[1].logPlaceNextBoat();
 		}
 		joueurEnCours = 1;
@@ -75,7 +79,8 @@ public class Game extends Observable implements Serializable{
 	public void shoot(int joueur, int a, int o){
 		if(gameIsRunning){
 			//System.out.println("Tir en "+a+","+o);
-			Log.getInstance().addLog("Joueur "+joueurEnCours+"> Tir en "+a+","+o);
+			//Log.getInstance().addLog("Joueur "+joueurEnCours+"> Tir en "+a+","+o);
+			Log.getInstance().addLog(players[joueur].getName()+"> Tir en "+a+","+o, true);
 			if(boards[joueur].getSquares()[a][o].tirer() == true) {
 				boolean verif = false;
 
@@ -87,7 +92,7 @@ public class Game extends Observable implements Serializable{
 				}
 				if(verif == false) {
 					//System.out.println("Le joueur "+joueur+" a perdu");
-					Log.getInstance().addLog("Le joueur "+joueur+" a perdu !");
+					Log.getInstance().addLog(players[joueur].getName()+" a perdu !", true);
 					gameIsRunning = false;
 				}
 			}
@@ -108,7 +113,7 @@ public class Game extends Observable implements Serializable{
 				if(boards[1].areBoatsAllPlaced()){
 					boatsAreAllPlaced = true;
 					gameIsRunning = true;
-					Log.getInstance().addLog("La partie peut commencer !");
+					Log.getInstance().addLog("La partie peut commencer !", true);
 				}else{
 					boards[1].logPlaceNextBoat();
 				}
@@ -126,13 +131,13 @@ public class Game extends Observable implements Serializable{
 	public void swapPlayers() {
 		Player p = players[0];
 		Board b = boards[0];
-		
+
 		players[0] = players[1];
 		boards[0] = boards[1];
-		
+
 		players[1] = p;
 		boards[1] = b;
-		
+
 		joueurEnCours = (joueurEnCours == 0 ? 1 : 0);
 	}
 

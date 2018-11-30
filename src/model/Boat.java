@@ -47,7 +47,7 @@ public class Boat  implements Serializable{
 					pv--;
 					ptsVie.put(sq, pv);
 					//System.out.println("Touch� "+sq.getPosX()+","+sq.getPosY());
-					Log.getInstance().addLog("                > Touch� "+sq.getPosX()+","+sq.getPosY());
+					Log.getInstance().addLog("                > Touch� "+sq.getPosX()+","+sq.getPosY(), true);
 					if(pv == 0){
 						boolean verif = true;
 						for(Integer i :ptsVie.values()){
@@ -60,7 +60,7 @@ public class Boat  implements Serializable{
 						if(verif){
 							coule = verif;
 							//System.out.println("Coul� "+sq.getPosX()+","+sq.getPosY());
-							Log.getInstance().addLog("                > Coul� "+sq.getPosX()+","+sq.getPosY());
+							Log.getInstance().addLog("                > Coul� "+sq.getPosX()+","+sq.getPosY(), true);
 							return true;
 						}
 
