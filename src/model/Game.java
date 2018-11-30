@@ -90,9 +90,8 @@ public class Game extends Observable implements Serializable{
 					Log.getInstance().addLog("Le joueur "+joueur+" a perdu !");
 					gameIsRunning = false;
 				}
-			}else {
-
 			}
+
 			joueurEnCours = (joueurEnCours == 0 ? 1 : 0);
 			setChanged();
 			notifyObservers();
