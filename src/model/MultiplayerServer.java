@@ -1,5 +1,7 @@
 package model;
 
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -27,9 +29,20 @@ public class MultiplayerServer extends UnicastRemoteObject implements Observer, 
 		ignoreNextLog = false;
 
 		System.out.println("binding server impl to registry");
-		Registry registry = LocateRegistry.getRegistry();
+		//Registry registry = LocateRegistry.getRegistry();
 
+		//LocateRegistry.
+		Registry registry = LocateRegistry.createRegistry(8080);
 
+		String ip = "";
+		try{
+			final DatagramSocket socket = new DatagramSocket();
+			socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+			ip = socket.getLocalAddress().getHostAddress();
+		}catch(Exception exc) {
+			exc.printStackTrace();
+		}
+		System.out.println(ip);
 
 		registry.rebind("multiplayer_server", this);
 		System.out.println("waiting for invocations");
@@ -70,7 +83,7 @@ public class MultiplayerServer extends UnicastRemoteObject implements Observer, 
 		ignoreNextLog = true;
 		Log.getInstance().addLog(s, false);
 
-		
+
 	}
 
 	public void setClient(MultiplayerClientInterface cl) {

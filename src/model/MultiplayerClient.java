@@ -1,5 +1,7 @@
 package model;
 
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -16,12 +18,24 @@ public class MultiplayerClient extends UnicastRemoteObject implements Multiplaye
 	private MultiplayerServerInterface srv;
 	private Window w;
 	private boolean ignoreNextLog;
-	
-	public MultiplayerClient (Window w) throws  NamingException, RemoteException, NotBoundException{
-		Registry registry = LocateRegistry.getRegistry();
+
+	public MultiplayerClient (Window w, String ip) throws  NamingException, RemoteException, NotBoundException{
+		//Registry registry = LocateRegistry.getRegistry();
+		if(ip!=null) {
+			ip = "192.168.0.1";
+			try{
+				final DatagramSocket socket = new DatagramSocket();
+				socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+				ip = socket.getLocalAddress().getHostAddress();
+			}catch(Exception exc) {
+				exc.printStackTrace();
+			}
+		}
+
+		Registry registry = LocateRegistry.getRegistry(ip, 8080, null);
 
 		ignoreNextLog = false;
-		
+
 		System.out.println("Rmi regisrty bindings");
 
 		String[] e = registry.list();

@@ -6,11 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import model.Game;
 import model.Log;
 import model.MultiplayerClient;
-import model.MultiplayerClientInterface;
 import model.MultiplayerServer;
 
 
@@ -72,7 +72,7 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
-		jmi = new JMenuItem("Rejoindre une partie multijoueur (Client)");
+		jmi = new JMenuItem("Rejoindre une partie multijoueur (Client local)");
 		jm1.add(jmi);
 		jmi.addActionListener(
 				new ActionListener() {
@@ -80,7 +80,29 @@ public class Menu extends JMenuBar{
 					public void actionPerformed(ActionEvent e) {
 						try {
 							Log.getInstance().clear();
-							MultiplayerClient mc = new MultiplayerClient(w);
+							MultiplayerClient mc = new MultiplayerClient(w, null);
+									//mc.bindToServer();
+							mc.getSrv().setClient(mc);
+							
+							
+							
+						}catch(Exception exc) {
+							exc.printStackTrace();
+						}
+					}
+				}
+				);
+		jmi = new JMenuItem("Rejoindre une partie multijoueur (Client non local)");
+		jm1.add(jmi);
+		jmi.addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						try {
+							String ip = JOptionPane.showInputDialog(this,"Adresse IP");
+							Log.getInstance().clear();
+							MultiplayerClient mc = new MultiplayerClient(w, ip);
 									//mc.bindToServer();
 							mc.getSrv().setClient(mc);
 							
