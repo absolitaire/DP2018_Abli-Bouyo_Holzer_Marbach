@@ -66,7 +66,7 @@ public class Menu extends JMenuBar{
 		jm1.add(jmi);
 		jmibis = new JMenuItem("XXeme siècle");
 		jmi.add(jmibis);
-		jmi.addActionListener(
+		jmibis.addActionListener(
 				new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -78,7 +78,7 @@ public class Menu extends JMenuBar{
 				);
 		jmibis = new JMenuItem("XVIeme siècle");
 		jmi.add(jmibis);
-		jmi.addActionListener(
+		jmibis.addActionListener(
 				new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -89,11 +89,14 @@ public class Menu extends JMenuBar{
 				}
 				);
 		
+		jm1= new JMenu("Nouvelle partie multi");
+		this.add(jm1);
+		
 		jmi = new JMenu("H�berger une partie multijoueur (Serveur)");
 		jm1.add(jmi);
 		jmibis = new JMenuItem("XXeme siècle");
 		jmi.add(jmibis);
-		jmi.addActionListener(
+		jmibis.addActionListener(
 				new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -109,7 +112,7 @@ public class Menu extends JMenuBar{
 				);
 		jmibis = new JMenuItem("XVIeme siècle");
 		jmi.add(jmibis);
-		jmi.addActionListener(
+		jmibis.addActionListener(
 				new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -165,35 +168,7 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
-		
-		JMenu jm2= new JMenu("Nouvelle partie multi");
-		this.add(jm2);
-		JMenuItem jmi2;
-		jmi = new JMenuItem("XXeme siècle");
-		jm2.add(jmi);
-		jmi.addActionListener(
-				new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						//g.setGameIsRunning(false);
-						System.out.println(e.getActionCommand());
-						//Log.getInstance().clear();
-					
-					}
-				}
-				);
-		jmi = new JMenuItem("XVIeme siècle");
-		jm2.add(jmi);
-		jmi.addActionListener(
-				new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						//g.setGameIsRunning(false);
-						System.out.println(e.getActionCommand());
-						//Log.getInstance().clear();
-					}
-				}
-				);
+
 	}
 
 
