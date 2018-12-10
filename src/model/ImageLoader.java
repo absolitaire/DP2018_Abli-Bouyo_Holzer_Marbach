@@ -33,6 +33,11 @@ public class ImageLoader {
     protected String crv1 = "img/crv1.png";
     protected String crv2 = "img/crv2.png";
     protected String crv3 = "img/crv3.png";
+    protected String tpv1 = "img/tpv1.png";
+    protected String tpv2 = "img/tpv2.png";
+    protected String tph1 = "img/tph1.png";
+    protected String tph2 = "img/tph2.png";
+    protected String sp3v1 = "img/sp3v1.png";
     protected Image[] tableauPng;
 
     /**
@@ -42,7 +47,7 @@ public class ImageLoader {
         try {
             //final String dir = System.getProperty("user.dir");
             //System.out.println("current dir = " + dir);
-            this.tableauPng = new Image[19];
+            this.tableauPng = new Image[24];
             this.tableauPng[0] = ImageIO.read(new FileInputStream(dh));
             this.tableauPng[1] = ImageIO.read(new FileInputStream(mh));
             this.tableauPng[2] = ImageIO.read(new FileInputStream(fh));
@@ -62,6 +67,11 @@ public class ImageLoader {
             this.tableauPng[16] = ImageIO.read(new FileInputStream(crv1));
             this.tableauPng[17] = ImageIO.read(new FileInputStream(crv2));
             this.tableauPng[18] = ImageIO.read(new FileInputStream(crv3));
+            this.tableauPng[19] = ImageIO.read(new FileInputStream(tpv1));
+            this.tableauPng[20] = ImageIO.read(new FileInputStream(tpv2));
+            this.tableauPng[21] = ImageIO.read(new FileInputStream(tph1));
+            this.tableauPng[22] = ImageIO.read(new FileInputStream(tph2));
+            this.tableauPng[23] = ImageIO.read(new FileInputStream(sp3v1));
         } catch (IOException e) {
             System.out.println(e);
         }
