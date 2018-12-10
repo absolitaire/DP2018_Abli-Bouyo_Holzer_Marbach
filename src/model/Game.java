@@ -15,8 +15,6 @@ public class Game extends Observable implements Serializable{
 		players = new Player[2];
 		boards = new Board[2];
 
-
-
 		if(multiplayer) {
 			boards[1] = new Board(new Boat20thFactory());
 			players[1] = new Player(1, "Host      ", new Human());
@@ -34,8 +32,6 @@ public class Game extends Observable implements Serializable{
 			//joueurs[0] = new Player(0, new Human());
 			boards[0].setJoueur(players[0]);
 		}
-
-
 
 		boards[0].automaticArrangement();
 		if(automaticArrangement){
