@@ -14,18 +14,23 @@ public class Game extends Observable implements Serializable{
 	public Game(int choixEpoque, boolean automaticArrangement, boolean multiplayer){
 		players = new Player[2];
 		boards = new Board[2];
-
-
-
 		if(multiplayer) {
-			boards[1] = new Board(new Boat20thFactory());
+			if(choixEpoque == 0){
+				boards[1] = new Board(new Boat20thFactory());
+			}else{
+				boards[1] = new Board(new Boat30thFactory());
+			}
 			players[1] = new Player(1, "Host      ", new Human());
 			boards[1].setJoueur(players[1]);
 			boards[0] = new Board(new Boat20thFactory());
 			players[0] = new Player(0, "Client    ", new Human());
 			boards[0].setJoueur(players[0]);
 		}else {
-			boards[1] = new Board(new Boat20thFactory());
+			if(choixEpoque == 0){
+				boards[1] = new Board(new Boat20thFactory());
+			}else{
+				boards[1] = new Board(new Boat30thFactory());
+			}
 			players[1] = new Player(1, "Joueur    ", new Human());
 			boards[1].setJoueur(players[1]);
 			boards[0] = new Board(new Boat20thFactory());
@@ -34,8 +39,6 @@ public class Game extends Observable implements Serializable{
 			//joueurs[0] = new Player(0, new Human());
 			boards[0].setJoueur(players[0]);
 		}
-
-
 
 		boards[0].automaticArrangement();
 		if(automaticArrangement){
