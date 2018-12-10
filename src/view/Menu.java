@@ -7,6 +7,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JSeparator;
 
 import model.Game;
 import model.Log;
@@ -26,14 +27,17 @@ public class Menu extends JMenuBar{
 		/*this.w = w;)*/
 		//this.g = g;
 
-		JMenu jm1= new JMenu("Nouvelle Partie");
+		JMenu jm1= new JMenu("Nouvelle Partie solo");
 		this.add(jm1);
 		//new JSeparator("dd");
 		JMenuItem jmi;
+		JMenuItem jmibis;
 		//jmi = 
-		jmi = new JMenuItem("Contre IA avec placement automatique");
+		jmi = new JMenu("Contre IA avec placement automatique");
 		jm1.add(jmi);
-		jmi.addActionListener(
+		jmibis = new JMenuItem("XXeme siècle");
+		jmi.add(jmibis);
+		jmibis.addActionListener(
 				new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -44,9 +48,25 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
-		jmi = new JMenuItem("Contre IA avec placement manuel");
+		jmibis = new JMenuItem("XVIeme siècle");
+		jmi.add(jmibis);
+		jmibis.addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						//g.setGameIsRunning(false);
+						System.out.println(e.getActionCommand());
+						Log.getInstance().clear();
+						w.newGame(new Game(1, true, false));
+					}
+				}
+				);
+		
+		jmi = new JMenu("Contre IA avec placement manuel");
 		jm1.add(jmi);
-		jmi.addActionListener(
+		jmibis = new JMenuItem("XXeme siècle");
+		jmi.add(jmibis);
+		jmibis.addActionListener(
 				new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -56,15 +76,49 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
-		jmi = new JMenuItem("H�berger une partie multijoueur (Serveur)");
+		jmibis = new JMenuItem("XVIeme siècle");
+		jmi.add(jmibis);
+		jmibis.addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						//g.setGameIsRunning(false);
+						Log.getInstance().clear();
+						w.newGame(new Game(1, false, false));
+					}
+				}
+				);
+		
+		jm1= new JMenu("Nouvelle partie multi");
+		this.add(jm1);
+		
+		jmi = new JMenu("H�berger une partie multijoueur (Serveur)");
 		jm1.add(jmi);
-		jmi.addActionListener(
+		jmibis = new JMenuItem("XXeme siècle");
+		jmi.add(jmibis);
+		jmibis.addActionListener(
 				new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						try {
 							Log.getInstance().clear();
 							w.newGame(new Game(0, true, true));
+							new MultiplayerServer(w);
+						}catch(Exception exc) {
+							exc.printStackTrace();
+						}
+					}
+				}
+				);
+		jmibis = new JMenuItem("XVIeme siècle");
+		jmi.add(jmibis);
+		jmibis.addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							Log.getInstance().clear();
+							w.newGame(new Game(1, true, true));
 							new MultiplayerServer(w);
 						}catch(Exception exc) {
 							exc.printStackTrace();
@@ -114,6 +168,7 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
+
 	}
 
 
