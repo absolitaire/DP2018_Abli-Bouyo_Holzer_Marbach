@@ -1,6 +1,5 @@
 package view;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -34,14 +33,7 @@ public class Logger extends JTextArea implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		String s3 = null;
-		try {
-			s3 = new String(Log.getInstance().getLogs().getBytes("UTF-8"),"windows-1252" );
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		this.setText(s3);
+		this.setText(Log.getInstance().getLogs());
 		jsc.revalidate();
 	}
 }

@@ -35,7 +35,7 @@ public class Menu extends JMenuBar{
 		//jmi = 
 		jmi = new JMenu("Contre IA avec placement automatique");
 		jm1.add(jmi);
-		jmibis = new JMenuItem("XXeme siècle");
+		jmibis = new JMenuItem("XXeme siecle");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
 				new ActionListener() {
@@ -48,7 +48,7 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
-		jmibis = new JMenuItem("XVIeme siècle");
+		jmibis = new JMenuItem("XVIeme siecle");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
 				new ActionListener() {
@@ -64,7 +64,7 @@ public class Menu extends JMenuBar{
 		
 		jmi = new JMenu("Contre IA avec placement manuel");
 		jm1.add(jmi);
-		jmibis = new JMenuItem("XXeme siècle");
+		jmibis = new JMenuItem("XXeme siecle");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
 				new ActionListener() {
@@ -76,7 +76,7 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
-		jmibis = new JMenuItem("XVIeme siècle");
+		jmibis = new JMenuItem("XVIeme siecle");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
 				new ActionListener() {
@@ -92,9 +92,9 @@ public class Menu extends JMenuBar{
 		jm1= new JMenu("Nouvelle partie multi");
 		this.add(jm1);
 		
-		jmi = new JMenu("H�berger une partie multijoueur (Serveur)");
+		jmi = new JMenu("Heberger une partie multijoueur (Serveur)");
 		jm1.add(jmi);
-		jmibis = new JMenuItem("XXeme siècle");
+		jmibis = new JMenuItem("XXeme siecle");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
 				new ActionListener() {
@@ -110,7 +110,7 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
-		jmibis = new JMenuItem("XVIeme siècle");
+		jmibis = new JMenuItem("XVIeme siecle");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
 				new ActionListener() {
