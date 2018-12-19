@@ -7,15 +7,12 @@ public class Boat30thFactory implements BoatFactory {
 	@Override
 	public ArrayList<Boat> creerBateaux() {
 		ArrayList<Boat> a = new ArrayList<Boat>();
-		int[] images = {0,0,2,3,0,0};
-		int[] images2 = {0,0,2,0,4,5};
-		int[] imagesSM = {10,0,12,0,8,9};
-		int[] imagesCR = {13,0,15,0,0,18};
+		int[] images = {26,27,28,23,24,25};
 		a.add(new Boat30th("Porte-Avions", 1, 5, images));
-		a.add(new Boat30th("Croiseur", 1, 4, imagesCR));
-		a.add(new Boat30th("Contre-Torpilleur", 1, 3, images2));
-		a.add(new Boat30th("Sous-Marin", 1, 3, imagesSM));
-		a.add(new Boat30th("Torpilleur", 1, 2, images2));
+		a.add(new Boat30th("Croiseur", 1, 4, images));
+		a.add(new Boat30th("Contre-Torpilleur", 1, 3, images));
+		a.add(new Boat30th("Sous-Marin", 1, 3, images));
+		a.add(new Boat30th("Torpilleur", 1, 2, images));
 		return a;
 	}
 	
