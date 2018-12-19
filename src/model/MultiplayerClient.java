@@ -34,23 +34,23 @@ public class MultiplayerClient extends UnicastRemoteObject implements Multiplaye
 				exc.printStackTrace();
 			}
 		}
-		System.out.println("rmi://"+ip+"/multiplayer_server");
+		System.out.println("rmi://"+ip+":8080/multiplayer_server");
 		try {
 			srv = (MultiplayerServerInterface)
-			Naming.lookup("rmi://"+ip+"/multiplayer_server");
+			Naming.lookup("rmi://"+ip+":8080/multiplayer_server");
 		} catch (MalformedURLException e1) {
-			System.out.println("vomerlépédé");
+			System.out.println("vomer");
 			e1.printStackTrace();
 		}
 		System.out.println("nttlfglfl");
 
-		Registry registry = LocateRegistry.getRegistry(ip, 8080, null);
+		//Registry registry = LocateRegistry.getRegistry(ip, 8080, null);
 
 		ignoreNextLog = false;
 
 		System.out.println("Rmi regisrty bindings");
 
-		String[] e = registry.list();
+		/*String[] e = registry.list();
 
 		for(int i = 0; i < e.length; i++) {
 			System.out.println(e[i]);
@@ -59,7 +59,7 @@ public class MultiplayerClient extends UnicastRemoteObject implements Multiplaye
 		String remoteObjectName = "multiplayer_server";
 		System.out.println(registry.lookup(remoteObjectName).getClass());
 		srv = (MultiplayerServerInterface)
-				registry.lookup(remoteObjectName);
+				registry.lookup(remoteObjectName);*/
 
 		System.out.println(srv.getGame().getGameIsRunning());
 		srv.logToServer("Un joueur s'est connecte!");
