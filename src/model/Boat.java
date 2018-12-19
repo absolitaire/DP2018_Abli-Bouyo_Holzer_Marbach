@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class Boat  implements Serializable{
-	private HashMap<Square, Integer> ptsVie;
-	private int taille, pvParCase;
-	private String nom;
-	private boolean coule;
+	protected HashMap<Square, Integer> ptsVie;
+	protected int taille, pvParCase;
+	protected String nom;
+	protected boolean coule;
 	//0-2 = horizontal    3-5 = vertical
 	private int[] images;
 

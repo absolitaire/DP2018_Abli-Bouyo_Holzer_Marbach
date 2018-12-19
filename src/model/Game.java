@@ -17,23 +17,25 @@ public class Game extends Observable implements Serializable{
 		if(multiplayer) {
 			if(choixEpoque == 0){
 				boards[1] = new Board(new Boat20thFactory());
+				boards[0] = new Board(new Boat20thFactory());
 			}else{
 				boards[1] = new Board(new Boat30thFactory());
+				boards[0] = new Board(new Boat30thFactory());
 			}
 			players[1] = new Player(1, "Host      ", new Human());
 			boards[1].setJoueur(players[1]);
-			boards[0] = new Board(new Boat20thFactory());
 			players[0] = new Player(0, "Client    ", new Human());
 			boards[0].setJoueur(players[0]);
 		}else {
 			if(choixEpoque == 0){
 				boards[1] = new Board(new Boat20thFactory());
+				boards[0] = new Board(new Boat20thFactory());
 			}else{
 				boards[1] = new Board(new Boat30thFactory());
+				boards[0] = new Board(new Boat30thFactory());
 			}
 			players[1] = new Player(1, "Joueur    ", new Human());
 			boards[1].setJoueur(players[1]);
-			boards[0] = new Board(new Boat20thFactory());
 			//joueurs[0] = new Player(0, new IARandom(this, 1));
 			players[0] = new Player(0, "IA             ", new IACross(this, 1));
 			//joueurs[0] = new Player(0, new Human());
@@ -83,7 +85,8 @@ public class Game extends Observable implements Serializable{
 		if(gameIsRunning){
 			//System.out.println("Tir en "+a+","+o);
 			//Log.getInstance().addLog("Joueur "+joueurEnCours+"> Tir en "+a+","+o);
-			Log.getInstance().addLog(players[joueur].getName()+"> Tir en "+a+","+o, true);
+			int i = ( joueur == 0 ? 1 : 0);
+			Log.getInstance().addLog(players[i].getName()+"> Tir en "+a+","+o, true);
 			if(boards[joueur].getSquares()[a][o].tirer() == true) {
 				boolean verif = false;
 

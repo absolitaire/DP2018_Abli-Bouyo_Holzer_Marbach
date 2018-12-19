@@ -48,7 +48,7 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
-		jmibis = new JMenuItem("XVIeme siecle");
+		jmibis = new JMenuItem("XXXeme siecle");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
 				new ActionListener() {
@@ -76,7 +76,7 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
-		jmibis = new JMenuItem("XVIeme siecle");
+		jmibis = new JMenuItem("XXXeme siecle");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
 				new ActionListener() {
@@ -110,7 +110,7 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
-		jmibis = new JMenuItem("XVIeme siecle");
+		jmibis = new JMenuItem("XXXeme siecle");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
 				new ActionListener() {
