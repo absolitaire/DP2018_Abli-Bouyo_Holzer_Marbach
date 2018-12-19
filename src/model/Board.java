@@ -192,7 +192,7 @@ public class Board implements Serializable {
 	
 	public void logPlaceNextBoat(){
 		if(boatsToPlace.size()>0){
-			Log.getInstance().addLog("Bateau � placer: "+boatsToPlace.get(0).getNom()+ " ("+boatsToPlace.get(0).getTaille()+")", true);
+			Log.getInstance().addLog("Bateau a placer: "+boatsToPlace.get(0).getNom()+ " ("+boatsToPlace.get(0).getTaille()+")", true);
 		}
 	}
 	

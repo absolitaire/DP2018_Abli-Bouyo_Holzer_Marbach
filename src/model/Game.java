@@ -50,7 +50,7 @@ public class Game extends Observable implements Serializable{
 		}else{
 			gameIsRunning = false;
 			boatsAreAllPlaced = false;
-			Log.getInstance().addLog("Appuyez sur n'importe quelle touche pour alterner entre le \nplacement vertical et horizontal.", true);
+			Log.getInstance().addLog("Faites un clic droit pour alterner entre le \nplacement vertical et horizontal.", true);
 			boards[1].logPlaceNextBoat();
 		}
 		joueurEnCours = 1;
