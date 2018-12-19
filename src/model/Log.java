@@ -3,15 +3,15 @@ package model;
 import java.util.Observable;
 
 public class Log extends Observable{
-	//private ArrayList<String> logs;
+
 	private StringBuffer logs;
 	private String temporaryMessage;
 	private String lastLogAdded;
 	private boolean lastLogIsLocal;
-	
+
 	private static Log instance = new Log();
+	
 	private Log() {
-		//logs = new ArrayList<String>();
 		logs = new StringBuffer();
 		temporaryMessage = "";
 		lastLogAdded = "";
@@ -20,21 +20,20 @@ public class Log extends Observable{
 	public static Log getInstance() {
 		return instance;
 	}
-	//public ArrayList<String> getLogs() {
+	
 	public String getLogs() {
 		return logs.toString();
 	}
-	public void addLog(String s, boolean local) {
-		//this.logs.add(s);
-		System.out.println(s);
+	public void addLog(String s, boolean isLocal) {
+		//System.out.println(s);
 		lastLogAdded = s;
 		logs.append("\n");
 		logs.append(s);
-		lastLogIsLocal = local;
+		lastLogIsLocal = isLocal;
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	public void clear(){
 		logs = new StringBuffer();
 		temporaryMessage = "";
@@ -42,7 +41,7 @@ public class Log extends Observable{
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	public String getTemporaryMessage() {
 		return temporaryMessage;
 	}
@@ -55,6 +54,6 @@ public class Log extends Observable{
 	public boolean getLastLogIsLocal() {
 		return lastLogIsLocal;
 	}
-	
-	
+
+
 }

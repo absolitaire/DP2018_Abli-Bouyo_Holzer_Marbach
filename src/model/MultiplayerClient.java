@@ -16,16 +16,17 @@ import javax.naming.NamingException;
 
 import view.Window;
 
+@SuppressWarnings("serial")
 public class MultiplayerClient extends UnicastRemoteObject implements MultiplayerClientInterface, Observer{
 	private MultiplayerServerInterface srv;
 	private Window w;
-	private boolean ignoreNextLog;
 
 	public MultiplayerClient (Window w, String ip) throws  NamingException, RemoteException, NotBoundException{
-		//Registry registry = LocateRegistry.getRegistry();
-		System.out.println(ip);
+
+		//System.out.println(ip);
 		if(ip==null) {
 			ip = "192.168.0.1";
+			//technique qui permet d'obtenir l'adresse IP de la carte reseau active
 			try{
 				final DatagramSocket socket = new DatagramSocket();
 				socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
@@ -34,46 +35,28 @@ public class MultiplayerClient extends UnicastRemoteObject implements Multiplaye
 				exc.printStackTrace();
 			}
 		}
-		System.out.println("rmi://"+ip+":8080/multiplayer_server");
+
 		try {
-			srv = (MultiplayerServerInterface)
-			Naming.lookup("rmi://"+ip+":8080/multiplayer_server");
-		} catch (MalformedURLException e1) {
-			System.out.println("vomer");
-			e1.printStackTrace();
-		}
-		System.out.println("nttlfglfl");
+			srv = (MultiplayerServerInterface) Naming.lookup("rmi://"+ip+":8080/multiplayer_server");
 
-		//Registry registry = LocateRegistry.getRegistry(ip, 8080, null);
+			srv.logToServer("Un joueur s'est connecte !");
+			Log.getInstance().addLog("Connexion reussie !", false);
+			w.newGamePlayersSwapped(srv.getGame());
 
-		ignoreNextLog = false;
-
-		System.out.println("Rmi regisrty bindings");
-
-		/*String[] e = registry.list();
-
-		for(int i = 0; i < e.length; i++) {
-			System.out.println(e[i]);
+			this.w = w;
+			w.getGame().addObserver(this);
+			Log.getInstance().addObserver(this);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.getInstance().addLog("Echec de la connexion", false);
 		}
 
-		String remoteObjectName = "multiplayer_server";
-		System.out.println(registry.lookup(remoteObjectName).getClass());
-		srv = (MultiplayerServerInterface)
-				registry.lookup(remoteObjectName);*/
 
-		System.out.println(srv.getGame().getGameIsRunning());
-		srv.logToServer("Un joueur s'est connecte!");
-		w.newGamePlayersSwapped(srv.getGame());
-
-		//UnicastRemoteObject.exportObject(this, 8080);
-		this.w = w;
-		w.getGame().addObserver(this);
-		Log.getInstance().addObserver(this);
 	}
 
 	@Override
 	public void updateClient() throws RemoteException {
-		//System.out.println("charge");
 
 		w.getGame().deleteObservers();
 		w.newGamePlayersSwapped(srv.getGame());
@@ -85,7 +68,6 @@ public class MultiplayerClient extends UnicastRemoteObject implements Multiplaye
 	}
 
 	public void bindToServer() {
-		System.out.println("bondage");
 		try {
 			srv.setClient(this);
 		}catch(Exception e) {
@@ -99,7 +81,6 @@ public class MultiplayerClient extends UnicastRemoteObject implements Multiplaye
 	}
 
 	public void logToClient(String s) {
-		ignoreNextLog = true;
 		Log.getInstance().addLog(s, false);
 	}
 
@@ -108,15 +89,12 @@ public class MultiplayerClient extends UnicastRemoteObject implements Multiplaye
 		if(srv!=null) {
 			try{
 				if(o instanceof Log) {
-					if(!Log.getInstance().getLastLogIsLocal()) {
-						//System.out.println("ignored cl");
-						//ignoreNextLog = false;
-					}else {
-						//System.out.println("ayy");
+					if(Log.getInstance().getLastLogIsLocal()) {
+						// Le changement vient de la classe Log
 						srv.logToServer(Log.getInstance().getLastLogAdded());
 					}
 				}else {
-					System.out.println("update server");
+					// Le changement vient de la classe Game
 					srv.updateServer();
 				}
 

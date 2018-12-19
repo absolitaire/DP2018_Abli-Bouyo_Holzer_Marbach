@@ -14,58 +14,52 @@ import javax.naming.NamingException;
 
 import view.Window;
 
+@SuppressWarnings("serial")
 public class MultiplayerServer extends UnicastRemoteObject implements Observer, MultiplayerServerInterface{
 
-	//private Game game;
 	private MultiplayerClientInterface cl;
 	private Window w;
-	private boolean ignoreNextLog;
 
-	public MultiplayerServer
-	(/*Game g*/ Window w) 
-			throws RemoteException,NamingException, AlreadyBoundException {
-		//this.game = g;
+	public MultiplayerServer(Window w) throws RemoteException,NamingException, AlreadyBoundException {
 		this.w = w;	
-		ignoreNextLog = false;
-
-		System.out.println("binding server impl to registry");
-		//Registry registry = LocateRegistry.getRegistry();
-
-		//LocateRegistry.
-		Registry registry = LocateRegistry.createRegistry(8080);
 
 		String ip = "";
 		try{
+			Registry registry = LocateRegistry.createRegistry(8080);
+			
+			//technique qui permet d'obtenir l'adresse IP de la carte reseau active
 			final DatagramSocket socket = new DatagramSocket();
 			socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
 			ip = socket.getLocalAddress().getHostAddress();
+
+			registry.rebind("multiplayer_server", this);
+
+			//System.out.println(ip);	
+
+			Log.getInstance().addLog("Hebergement d'une partie - en attente d'une connexion", false);
+			Log.getInstance().addLog("Votre adresse IP est "+ip, false);
+
+			w.getGame().addObserver(this);
+			Log.getInstance().addObserver(this);
 		}catch(Exception exc) {
 			exc.printStackTrace();
 		}
-		System.out.println(ip);
-
-		registry.rebind("multiplayer_server", this);
-		System.out.println("waiting for invocations");
-
-		w.getGame().addObserver(this);
-		Log.getInstance().addObserver(this);
 
 	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 
 		if(cl!=null) {
 			try{
 				if(o instanceof Log) {
-					if(!Log.getInstance().getLastLogIsLocal()) {
-						System.out.println("ignored srv");
-						ignoreNextLog = false;
-					}else {
+					// Le changement vient de la classe Log
+					if(Log.getInstance().getLastLogIsLocal()) {
 						cl.logToClient(Log.getInstance().getLastLogAdded());
 					}
 
 				}else {
-					System.out.println("pdate");
+					// Le changement vient de la classe Game
 					cl.updateClient();
 				}
 
@@ -75,25 +69,24 @@ public class MultiplayerServer extends UnicastRemoteObject implements Observer, 
 			}
 		}
 	}
+	
 	public Game getGame() {
 		return w.getGame();
 	}
 
 	public void logToServer(String s) {
-		ignoreNextLog = true;
 		Log.getInstance().addLog(s, false);
 
 
 	}
 
 	public void setClient(MultiplayerClientInterface cl) {
-		System.out.println("link fait");
+		
 		this.cl = cl;
 	}
 
 	@Override
 	public void updateServer() throws RemoteException {
-		//System.out.println("charge");
 		w.getGame().deleteObservers();
 		w.newGamePlayersSwapped(cl.getGame());
 		w.getGame().addObserver(this);
