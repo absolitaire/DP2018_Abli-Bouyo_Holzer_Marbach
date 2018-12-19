@@ -40,14 +40,14 @@ public class Window extends JFrame {
 		this.add(m, BorderLayout.NORTH);
 		
 		op = new OpponentView(g.getBoard(0), imgfac);
-		op.setPreferredSize(new  Dimension (Board.TAILLE*TAILLE_CASES+1,Board.TAILLE*TAILLE_CASES+1));
+		op.setPreferredSize(new  Dimension (Board.BOARD_SIZE*TAILLE_CASES+1,Board.BOARD_SIZE*TAILLE_CASES+1));
 		this.add(op, BorderLayout.EAST);
 		oc = new OpponentController(g);
 		op.addMouseListener(oc);
 		g.addObserver(op);
 		
 		al = new AlliedView(g.getBoard(1),imgfac);
-		al.setPreferredSize(new  Dimension (Board.TAILLE*TAILLE_CASES+1,Board.TAILLE*TAILLE_CASES+1));
+		al.setPreferredSize(new  Dimension (Board.BOARD_SIZE*TAILLE_CASES+1,Board.BOARD_SIZE*TAILLE_CASES+1));
 		this.add(al, BorderLayout.WEST);
 		ac = new AlliedController(g, al);
 		al.addMouseListener(ac);
@@ -74,7 +74,7 @@ public class Window extends JFrame {
 		g.addObserver(op2);*/
 		
 		
-		this.setPreferredSize(new  Dimension (2*Board.TAILLE*TAILLE_CASES + 402,Board.TAILLE*TAILLE_CASES+53));
+		this.setPreferredSize(new  Dimension (2*Board.BOARD_SIZE*TAILLE_CASES + 402,Board.BOARD_SIZE*TAILLE_CASES+53));
 		this.pack ();
 		this.setVisible(true);
 		

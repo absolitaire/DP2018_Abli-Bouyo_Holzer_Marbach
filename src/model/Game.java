@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.util.Observable;
 
+
+@SuppressWarnings("serial")
 public class Game extends Observable implements Serializable{
 
 	private Player[] players;
@@ -23,9 +25,9 @@ public class Game extends Observable implements Serializable{
 				boards[0] = new Board(new Boat30thFactory());
 			}
 			players[1] = new Player(1, "Host      ", new Human());
-			boards[1].setJoueur(players[1]);
+			//boards[1].setJoueur(players[1]);
 			players[0] = new Player(0, "Client    ", new Human());
-			boards[0].setJoueur(players[0]);
+			//boards[0].setJoueur(players[0]);
 		}else {
 			if(choixEpoque == 0){
 				boards[1] = new Board(new Boat20thFactory());
@@ -35,11 +37,11 @@ public class Game extends Observable implements Serializable{
 				boards[0] = new Board(new Boat30thFactory());
 			}
 			players[1] = new Player(1, "Joueur    ", new Human());
-			boards[1].setJoueur(players[1]);
+			//boards[1].setJoueur(players[1]);
 			//joueurs[0] = new Player(0, new IARandom(this, 1));
 			players[0] = new Player(0, "IA             ", new IACross(this, 1));
 			//joueurs[0] = new Player(0, new Human());
-			boards[0].setJoueur(players[0]);
+			//boards[0].setJoueur(players[0]);
 		}
 
 		boards[0].automaticArrangement();
@@ -87,11 +89,11 @@ public class Game extends Observable implements Serializable{
 			//Log.getInstance().addLog("Joueur "+joueurEnCours+"> Tir en "+a+","+o);
 			int i = ( joueur == 0 ? 1 : 0);
 			Log.getInstance().addLog(players[i].getName()+"> Tir en "+a+","+o, true);
-			if(boards[joueur].getSquares()[a][o].tirer() == true) {
+			if(boards[joueur].getSquares()[a][o].shootHere() == true) {
 				boolean verif = false;
 
 				for(Boat boat : boards[joueur].getBateaux()) {
-					if(!boat.isCoule()) {
+					if(!boat.hasSunk()) {
 						verif = true; 
 						break;
 					}

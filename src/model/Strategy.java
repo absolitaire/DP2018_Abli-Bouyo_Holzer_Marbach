@@ -4,5 +4,5 @@ import java.io.Serializable;
 
 public interface Strategy extends Serializable {
 
-	public void tirer();
+	public void shoot();
 }

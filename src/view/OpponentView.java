@@ -15,7 +15,7 @@ public class OpponentView extends JPanel implements Observer{
 	
 	private static final long serialVersionUID = 1L;
 
-	private ImageLoader imgfac;
+	private ImageLoader imgfac; 
 
 	private Board b;
 
@@ -48,7 +48,7 @@ public class OpponentView extends JPanel implements Observer{
 
 				}else{
 					if(tab[i][j].isShooted()){
-						if(tab[i][j].getBoat().isCoule()){
+						if(tab[i][j].getBoat().hasSunk()){
 							g.setColor(Color.RED);
 						}else{
 							g.setColor(Color.ORANGE);
