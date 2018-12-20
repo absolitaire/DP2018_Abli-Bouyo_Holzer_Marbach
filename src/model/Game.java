@@ -18,7 +18,7 @@ public class Game extends Observable implements Serializable{
 		this.players = new Player[2];
 		this.boards = new Board[2];
 		this.multiplayer = multiplayer;
-		
+
 		if(multiplayer) {
 			if(choixEpoque == 0){
 				boards[1] = new Board(new Boat20thFactory());
@@ -52,10 +52,14 @@ public class Game extends Observable implements Serializable{
 			//boatsAreAllPlaced = false;
 			//Log.getInstance().addLog("Faites un clic droit pour alterner entre le \nplacement vertical et horizontal.", true);
 			//boards[1].logPlaceNextBoat();
+
+			if(automaticArrangement){
+				boards[0].automaticArrangement();
+			}
 		}else{
 			boards[0].automaticArrangement();
 		}
-		
+
 		if(automaticArrangement){
 			boards[1].automaticArrangement();
 			boatsAreAllPlaced = true;
@@ -96,6 +100,7 @@ public class Game extends Observable implements Serializable{
 
 	public void shoot(int joueur, int a, int o){
 		if(gameIsRunning){
+
 			//System.out.println("Tir en "+a+","+o);
 			//Log.getInstance().addLog("Joueur "+joueurEnCours+"> Tir en "+a+","+o);
 			int i = ( joueur == 0 ? 1 : 0);
@@ -115,6 +120,8 @@ public class Game extends Observable implements Serializable{
 					gameIsRunning = false;
 				}
 			}
+
+			//logTurn();
 
 			joueurEnCours = (joueurEnCours == 0 ? 1 : 0);
 			setChanged();
@@ -144,6 +151,23 @@ public class Game extends Observable implements Serializable{
 		}
 
 	}
+	
+	/*public void logTurn() {
+		if(gameIsRunning) {
+			System.out.println(joueurEnCours);
+			if(joueurEnCours==1) {
+
+				
+				Log.getInstance().setTemporaryMessage("A votre tour de jouer"+ ++ppp);
+			}else {
+				Log.getInstance().setTemporaryMessage("En attente du coup de votre adversaire");
+			}
+
+		}else {
+			System.out.println("zzz");
+				Log.getInstance().setTemporaryMessage(" ");
+		}
+	}*/
 
 	public boolean getBoatsAreAllPlaced() {
 		return boatsAreAllPlaced;

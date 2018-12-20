@@ -24,14 +24,14 @@ public class Menu extends JMenuBar{
 
 	public Menu(final Window w) {
 
-		JMenu jm1= new JMenu("Nouvelle Partie solo");
-		this.add(jm1);
+		JMenu jmenu= new JMenu("Nouvelle Partie solo");
+		this.add(jmenu);
 
 		JMenuItem jmi;
 		JMenuItem jmibis;
 
 		jmi = new JMenu("Contre IA avec placement automatique");
-		jm1.add(jmi);
+		jmenu.add(jmi);
 		jmibis = new JMenuItem("XXeme siecle");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
@@ -58,7 +58,7 @@ public class Menu extends JMenuBar{
 				);
 		
 		jmi = new JMenu("Contre IA avec placement manuel");
-		jm1.add(jmi);
+		jmenu.add(jmi);
 		jmibis = new JMenuItem("XXeme siecle");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
@@ -84,11 +84,11 @@ public class Menu extends JMenuBar{
 				}
 				);
 		
-		jm1= new JMenu("Nouvelle partie multi");
-		this.add(jm1);
+		jmenu= new JMenu("Nouvelle partie multi");
+		this.add(jmenu);
 		
 		jmi = new JMenu("Heberger une partie multijoueur (Serveur)");
-		jm1.add(jmi);
+		jmenu.add(jmi);
 		jmibis = new JMenuItem("XXeme siecle (placement automatique)");
 		jmi.add(jmibis);
 		jmibis.addActionListener(
@@ -139,11 +139,27 @@ public class Menu extends JMenuBar{
 					}
 				}
 				);
+		jmibis = new JMenuItem("XXXeme siecle (placement manuel)");
+		jmi.add(jmibis);
+		jmibis.addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							Log.getInstance().clear();
+							w.newGame(new Game(1, false, true));
+							new MultiplayerServer(w);
+						}catch(Exception exc) {
+							exc.printStackTrace();
+						}
+					}
+				}
+				);
 		
 		
 		
 		jmi = new JMenuItem("Rejoindre une partie multijoueur (Client local)");
-		jm1.add(jmi);
+		jmenu.add(jmi);
 		jmi.addActionListener(
 				new ActionListener() {
 					@Override
@@ -162,7 +178,7 @@ public class Menu extends JMenuBar{
 				}
 				);
 		jmi = new JMenuItem("Rejoindre une partie multijoueur (Client non local)");
-		jm1.add(jmi);
+		jmenu.add(jmi);
 		jmi.addActionListener(
 				new ActionListener() {
 					@Override

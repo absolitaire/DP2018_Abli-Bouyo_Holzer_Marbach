@@ -23,7 +23,7 @@ public class IACross implements Strategy {
 	public void shoot() {
 
 		int a, o;
-		if(focus != null) {
+		if(focus != null && !nextTargets.isEmpty()) {
 			Square sq = nextTargets.pop();
 			a = sq.getPosX();
 			o = sq.getPosY();

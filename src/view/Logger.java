@@ -34,6 +34,7 @@ public class Logger extends JTextArea implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		this.setText(Log.getInstance().getLogs());
+		//this.setText(Log.getInstance().getLogs()+"\n"+Log.getInstance().getTemporaryMessage());
 		jsc.revalidate();
 	}
 }
