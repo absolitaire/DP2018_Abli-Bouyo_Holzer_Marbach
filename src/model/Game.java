@@ -14,7 +14,7 @@ public class Game extends Observable implements Serializable{
 	private boolean boatsAreAllPlaced;
 	private boolean multiplayer;
 
-	public Game(int choixEpoque, boolean automaticArrangement, boolean multiplayer){
+	public Game(int choixEpoque, boolean automaticArrangement, boolean multiplayer, String strategy){
 		this.players = new Player[2];
 		this.boards = new Board[2];
 		this.multiplayer = multiplayer;
@@ -42,7 +42,12 @@ public class Game extends Observable implements Serializable{
 			players[1] = new Player(1, "Joueur    ", new Human());
 			//boards[1].setJoueur(players[1]);
 			//joueurs[0] = new Player(0, new IARandom(this, 1));
-			players[0] = new Player(0, "IA             ", new IACross(this, 1));
+			if(strategy.equals("IACross")) {
+				players[0] = new Player(0, "IA             ", new IACross(this, 1));
+			}else if(strategy.equals("IARandom")){
+				players[0] = new Player(0, "IA             ", new IARandom(this, 1));
+			}
+			//players[0] = new Player(0, "IA             ", new IACross(this, 1));
 			//joueurs[0] = new Player(0, new Human());
 			//boards[0].setJoueur(players[0]);
 		}
