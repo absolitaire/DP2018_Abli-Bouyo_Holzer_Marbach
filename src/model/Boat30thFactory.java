@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Boat30thFactory implements BoatFactory {
 	
 	@Override
-	public ArrayList<Boat> creerBateaux() {
+	public ArrayList<Boat> createBoats() {
 		ArrayList<Boat> a = new ArrayList<Boat>();
 		int[] images = {26,27,28,23,24,25};
 		a.add(new Boat30th("Porte-Avions", 1, 5, images));

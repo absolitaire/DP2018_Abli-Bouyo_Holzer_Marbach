@@ -2,7 +2,8 @@ package model;
 
 import java.io.Serializable;
 
-public class Square  implements Serializable {
+@SuppressWarnings("serial")
+public class Square implements Serializable {
 
 	private int posX, posY;
 	private boolean shooted;
@@ -73,11 +74,11 @@ public class Square  implements Serializable {
 		return true;
 	}
 
-	public boolean tirer(){
+	public boolean shootHere(){
 		
 		shooted = true;
 		if(boat != null){
-			return(boat.toucher(this));
+			return(boat.hit(this));
 		}
 		
 		return false;

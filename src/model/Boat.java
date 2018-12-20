@@ -3,63 +3,66 @@ package model;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class Boat  implements Serializable{
-	protected HashMap<Square, Integer> ptsVie;
-	protected int taille, pvParCase;
-	protected String nom;
-	protected boolean coule;
+@SuppressWarnings("serial")
+public class Boat implements Serializable{
+	protected HashMap<Square, Integer> health;
+	protected int size, healthbySquare;
+	protected String name;
+	protected boolean hasSunk;
 	//0-2 = horizontal    3-5 = vertical
 	private int[] images;
 
-	public Boat(String n, int pvParCase, int t, int[] img) {
-		nom = n;
-		ptsVie = new HashMap<Square, Integer>();
-		coule = false;
-		taille = t;
-		this.pvParCase = pvParCase;
+	public Boat(String n, int h, int t, int[] img) {
+		name = n;
+		health = new HashMap<Square, Integer>();
+		hasSunk = false;
+		size = t;
+		this.healthbySquare = h;
 		this.images = img;
 	}
 
-	public HashMap<Square, Integer> getPtsVie() {
-		return ptsVie;
-	}
+
+	/*
+	public HashMap<Square, Integer> getHealth() {
+		return health;
+	}*/
 
 	public void setSquare(Square sq){
-		this.ptsVie.put(sq, pvParCase);
+		this.health.put(sq, healthbySquare);
 	}
-	public int getTaille() {
-		return taille;
-	}
-
-	public String getNom() {
-		return nom;
+	public int getSize() {
+		return size;
 	}
 
-	public boolean isCoule() {
-		return coule;
+	public String getName() {
+		return name;
 	}
 
-	public boolean toucher(Square sq){
-		if(!coule){
-			if(ptsVie.containsKey(sq)){
-				Integer pv = ptsVie.get(sq);
+	public boolean hasSunk() {
+		return hasSunk;
+	}
+
+	public boolean hit(Square sq){
+		if(!hasSunk){
+			if(health.containsKey(sq)){
+				Integer pv = health.get(sq);
 				if(pv > 0){
 					pv--;
-					ptsVie.put(sq, pv);
-					//System.out.println("Touch� "+sq.getPosX()+","+sq.getPosY());
+					health.put(sq, pv);
+
 					Log.getInstance().addLog("                > Touche "+sq.getPosX()+","+sq.getPosY(), true);
 					if(pv == 0){
 						boolean verif = true;
-						for(Integer i :ptsVie.values()){
-							//System.out.println(i);
+						for(Integer i : health.values()){
+
 							if(i>0){
 								verif = false;
 								break;
 							}
 						}
 						if(verif){
-							coule = verif;
-							//System.out.println("Coul� "+sq.getPosX()+","+sq.getPosY());
+							hasSunk = verif;
+
 							Log.getInstance().addLog("                > Coule "+sq.getPosX()+","+sq.getPosY(), true);
 							return true;
 						}
@@ -71,7 +74,7 @@ public class Boat  implements Serializable{
 		}
 		return false;
 	}
-	
+
 	public int[] getImages(){
 		return images;
 	}

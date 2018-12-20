@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Stack;
 
+@SuppressWarnings("serial")
 public class IACross implements Strategy {
 	private Game g;
 	private Board b;
@@ -19,7 +20,7 @@ public class IACross implements Strategy {
 		changementQuadrillage = false;
 	}
 	@Override
-	public void tirer() {
+	public void shoot() {
 
 		int a, o;
 		if(focus != null) {
@@ -28,7 +29,7 @@ public class IACross implements Strategy {
 			o = sq.getPosY();
 			g.shoot(idOpponent, a, o );
 			if(sq.getBoat()!= null) {
-				if(sq.getBoat().isCoule()) {
+				if(sq.getBoat().hasSunk()) {
 					nextTargets.removeAllElements();
 					focus = null;
 				}else {
@@ -41,31 +42,30 @@ public class IACross implements Strategy {
 						if(!b.getSquares()[a][o-1].isShooted())
 							nextTargets.add(b.getSquares()[a][o-1]);
 					}
-					if(a<Board.TAILLE-1) {
+					if(a<Board.BOARD_SIZE-1) {
 						if(!b.getSquares()[a+1][o].isShooted())
 							nextTargets.add(b.getSquares()[a+1][o]);
 					}
-					if(o<Board.TAILLE-1) {
+					if(o<Board.BOARD_SIZE-1) {
 						if(!b.getSquares()[a][o+1].isShooted())
 							nextTargets.add(b.getSquares()[a][o+1]);
 					}
 					
-					ArrayList<Square> prio = new ArrayList<Square>();
+					ArrayList<Square> priority = new ArrayList<Square>();
 					if(sq.getPosX()==focus.getPosX()) {
 						for(Square s : nextTargets) {
 							if(s.getPosX() == sq.getPosX()) {
-								prio.add(s);
+								priority.add(s);
 							}
 						}
 					}if(sq.getPosY()==focus.getPosY()) {
 						for(Square s : nextTargets) {
 							if(s.getPosY() == sq.getPosY()) {
-								prio.add(s);
+								priority.add(s);
 							}
 						}
 					}
-					for(Square s : prio) {
-						//System.out.println("ayyy + "+s.getPosX() +" "+s.getPosY());
+					for(Square s : priority) {
 						nextTargets.remove(s);
 						nextTargets.push(s);
 					}
@@ -74,11 +74,11 @@ public class IACross implements Strategy {
 				}
 			}
 		}else {
-			int essais = 0;
+			int tries = 0;
 			while(true) {
-				essais ++;
-				a = 2*(int)(Board.TAILLE/2*Math.random());
-				o = 2*(int)(Board.TAILLE/2*Math.random());
+				tries ++;
+				a = 2*(int)(Board.BOARD_SIZE/2*Math.random());
+				o = 2*(int)(Board.BOARD_SIZE/2*Math.random());
 				if(Math.random()<0.5) {
 					if(changementQuadrillage) {
 						a++;
@@ -97,7 +97,7 @@ public class IACross implements Strategy {
 
 					g.shoot(idOpponent, a, o);
 					if(b.getSquares()[a][o].getBoat()!= null) {
-						if(!b.getSquares()[a][o].getBoat().isCoule()) {
+						if(!b.getSquares()[a][o].getBoat().hasSunk()) {
 							focus = b.getSquares()[a][o];
 							if(a>0) {
 								if(!b.getSquares()[a-1][o].isShooted())
@@ -107,11 +107,11 @@ public class IACross implements Strategy {
 								if(!b.getSquares()[a][o-1].isShooted())
 									nextTargets.add(b.getSquares()[a][o-1]);
 							}
-							if(a<Board.TAILLE-1) {
+							if(a<Board.BOARD_SIZE-1) {
 								if(!b.getSquares()[a+1][o].isShooted())
 									nextTargets.add(b.getSquares()[a+1][o]);
 							}
-							if(o<Board.TAILLE-1) {
+							if(o<Board.BOARD_SIZE-1) {
 								if(!b.getSquares()[a][o+1].isShooted())
 									nextTargets.add(b.getSquares()[a][o+1]);
 							}
@@ -121,7 +121,7 @@ public class IACross implements Strategy {
 					break;
 				}
 
-				if(essais > (Board.TAILLE * Board.TAILLE / 2)) {
+				if(tries > (Board.BOARD_SIZE * Board.BOARD_SIZE / 2)) {
 					changementQuadrillage = !changementQuadrillage;
 				}
 			}

@@ -1,5 +1,6 @@
 package model;
 
+@SuppressWarnings("serial")
 public class IARandom implements Strategy {
 	private Game g;
 	private Board b;
@@ -11,20 +12,17 @@ public class IARandom implements Strategy {
 		this.idOpponent = opponent;
 	}
 	@Override
-	public void tirer() {
-		//System.out.println("ia");
+	public void shoot() {
 		int a, o;
 		while(true) {
-			a = (int)(Board.TAILLE*Math.random());
-			o = (int)(Board.TAILLE*Math.random());
-			//System.out.println(a+" "+o+b);
+			a = (int)(Board.BOARD_SIZE*Math.random());
+			o = (int)(Board.BOARD_SIZE*Math.random());
 			if(!b.getSquares()[a][o].isShooted()) {
 				
 				g.shoot(idOpponent, a, o);
 				break;
 			}
 		}
-		//System.out.println("fin ia");
 	}
 
 }
