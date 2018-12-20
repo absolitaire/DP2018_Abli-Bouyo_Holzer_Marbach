@@ -2,7 +2,9 @@ package model;
 
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -33,7 +35,7 @@ public class MultiplayerServer extends UnicastRemoteObject implements Observer, 
 
 		//LocateRegistry.
 		Registry registry = LocateRegistry.createRegistry(8080);
-
+		System.out.println(20);
 		String ip = "";
 		try{
 			final DatagramSocket socket = new DatagramSocket();
@@ -43,8 +45,14 @@ public class MultiplayerServer extends UnicastRemoteObject implements Observer, 
 			exc.printStackTrace();
 		}
 		System.out.println(ip);
-
-		registry.rebind("multiplayer_server", this);
+		try {
+			//Naming.rebind("rmi://"+ip+"/multiplayer_server", this);
+			Naming.rebind("rmi://"+ip+":8080/multiplayer_server", this);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//registry.rebind("multiplayer_server", this);
 		System.out.println("waiting for invocations");
 
 		w.getGame().addObserver(this);
