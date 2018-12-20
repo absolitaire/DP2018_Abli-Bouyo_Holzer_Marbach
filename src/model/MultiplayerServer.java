@@ -43,6 +43,8 @@ public class MultiplayerServer extends UnicastRemoteObject implements Observer, 
 			Log.getInstance().addObserver(this);
 		}catch(Exception exc) {
 			exc.printStackTrace();
+
+			Log.getInstance().addLog("Echec de l'hebergement de partie", false);
 		}
 
 	}

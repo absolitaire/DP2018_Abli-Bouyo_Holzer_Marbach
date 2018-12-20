@@ -11,7 +11,7 @@ public class Board implements Serializable {
 
 	//private transient Player player;
 	private ArrayList<Boat> boats;
-	private transient ArrayList<Boat> boatsToPlace;
+	private ArrayList<Boat> boatsToPlace;
 	private Square[][] squares;
 	private transient BoatFactory bf;
 
@@ -37,91 +37,94 @@ public class Board implements Serializable {
 					Math.random() < 0.5);
 		}
 	}
-	
+
 	public boolean placeBoat(int a, int o, boolean horizontal) {
-		Boat boat = boatsToPlace.get(0);
-		int taille = boat.getSize();
-		int x = a;
-		int y = o;
-		boolean echec = false;
+		if(boatsToPlace.size() > 0){
+			Boat boat = boatsToPlace.get(0);
+			int taille = boat.getSize();
+			int x = a;
+			int y = o;
+			boolean echec = false;
 
-		while(taille > 0 && !echec){
-			if(x<BOARD_SIZE && y<BOARD_SIZE) {
-				if(squares[x][y].getBoat()== null) {
-					if(horizontal) {
-						x++;
+			while(taille > 0 && !echec){
+				if(x<BOARD_SIZE && y<BOARD_SIZE) {
+					if(squares[x][y].getBoat()== null) {
+						if(horizontal) {
+							x++;
+						}else {
+							y++;
+						}
+						taille--;
+
 					}else {
-						y++;
+						echec = true;
 					}
-					taille--;
-
-				}else {
+				}else{
 					echec = true;
 				}
-			}else{
-				echec = true;
-			}
 
-		}
-		if(!echec) {
-			taille = boat.getSize();
-			x = a;
-			y = o;
-			squares[x][y].setBoat(boat);
-			boat.setSquare(squares[x][y]);
-			if(horizontal) {
-				squares[x][y].setIdImage(boat.getImages()[0]);
-				x++;
-			}else {
-				squares[x][y].setIdImage(boat.getImages()[3]);
-				y++;
 			}
-			taille--;
-			while(taille > 1){
-				//System.out.println(x+"  "+y);
+			if(!echec) {
+				taille = boat.getSize();
+				x = a;
+				y = o;
 				squares[x][y].setBoat(boat);
 				boat.setSquare(squares[x][y]);
 				if(horizontal) {
-					squares[x][y].setIdImage(boat.getImages()[1]);
+					squares[x][y].setIdImage(boat.getImages()[0]);
 					x++;
 				}else {
-					squares[x][y].setIdImage(boat.getImages()[4]);
+					squares[x][y].setIdImage(boat.getImages()[3]);
 					y++;
 				}
 				taille--;
+				while(taille > 1){
+					//System.out.println(x+"  "+y);
+					squares[x][y].setBoat(boat);
+					boat.setSquare(squares[x][y]);
+					if(horizontal) {
+						squares[x][y].setIdImage(boat.getImages()[1]);
+						x++;
+					}else {
+						squares[x][y].setIdImage(boat.getImages()[4]);
+						y++;
+					}
+					taille--;
+				}
+				squares[x][y].setBoat(boat);
+				boat.setSquare(squares[x][y]);
+				if(horizontal) {
+					squares[x][y].setIdImage(boat.getImages()[2]);
+					x++;
+				}else {
+					squares[x][y].setIdImage(boat.getImages()[5]);
+					y++;
+				}
+				boats.add(boat);
+				boatsToPlace.remove(boat);
+				return true;
 			}
-			squares[x][y].setBoat(boat);
-			boat.setSquare(squares[x][y]);
-			if(horizontal) {
-				squares[x][y].setIdImage(boat.getImages()[2]);
-				x++;
-			}else {
-				squares[x][y].setIdImage(boat.getImages()[5]);
-				y++;
-			}
-			boats.add(boat);
-			boatsToPlace.remove(boat);
-			return true;
 		}
+
 		return false;
 	}
-	
+
 	public boolean areBoatsAllPlaced(){
 		return boatsToPlace.size() == 0;
 	}
-	
-	
+
+
 	public int sizeOfTheNextBoatToPlace(){
 		if( boatsToPlace.size() == 0 )return -1;
 		return boatsToPlace.get(0).getSize();
 	}
-	
+
 	public void logPlaceNextBoat(){
 		if(boatsToPlace.size()>0){
-			Log.getInstance().addLog("Bateau a placer: "+boatsToPlace.get(0).getName()+ " ("+boatsToPlace.get(0).getSize()+")", true);
+			Log.getInstance().addLog("Bateau a placer: "+boatsToPlace.get(0).getName()+ " ("+boatsToPlace.get(0).getSize()+")", false);
 		}
 	}
-	
+
 	public Square[][] getSquares() {
 		return squares;
 	}
