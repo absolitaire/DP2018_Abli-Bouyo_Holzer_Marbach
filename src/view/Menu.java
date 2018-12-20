@@ -185,7 +185,7 @@ public class Menu extends JMenuBar{
 					public void actionPerformed(ActionEvent e) {
 						
 						try {
-							String ip = JOptionPane.showInputDialog(this,"Adresse IP");
+							String ip = JOptionPane.showInputDialog("Adresse IP",null);
 							Log.getInstance().clear();
 							MultiplayerClient mc = new MultiplayerClient(w, ip);
 							mc.getSrv().setClient(mc);
